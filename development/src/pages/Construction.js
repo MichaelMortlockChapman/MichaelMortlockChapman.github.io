@@ -16,7 +16,7 @@ export default function Construction () {
         }}
       >
         <div style={{ width: '100%', height: '10px', backgroundRepeat: 'repeat-x', backgroundImage: 'url(cautionTape.svg)' }}/>
-        <div style={{ backgroundColor: 'white', width: '100%', padding: '20px' }}>
+        <div style={{ backgroundColor: 'white', width: '100%', padding: '20px 0px' }}>
           <Typography fontWeight={'bold'}>Under Construction!</Typography>
         </div>
         <div style={{ width: '100%', height: '10px', objectFit: 'contain', backgroundRepeat: 'repeat-x', backgroundImage: 'url(cautionTape.svg)' }}/>
