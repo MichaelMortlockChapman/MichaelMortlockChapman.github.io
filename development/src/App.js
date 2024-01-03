@@ -20,10 +20,9 @@ function App () {
     <BrowserRouter>
       <ThemeProvider theme={theme}>
         <Routes>
-          <Route path='*' element={<Construction/>}/>
-          {/* <Route path="/" element={<Navbar/>}>
+          <Route path="/" element={<Navbar/>}>
             <Route path="home" element={<Frontpage/>}/>
-          </Route> */}
+          </Route>
         </Routes>
       </ThemeProvider>
     </BrowserRouter>
