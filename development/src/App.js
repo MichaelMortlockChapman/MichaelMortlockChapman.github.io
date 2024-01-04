@@ -6,12 +6,15 @@ import Navbar from './pages/Navbar'
 import Frontpage from './pages/Frontpage'
 import Construction from './pages/Construction'
 
-export const theme = createTheme({
+const theme = createTheme({
   palette: {
-    // primary: {
-    //   main: '#6200EE',
-    //   secondary: '#bb86fc'
-    // }
+    primary: {
+      main: '#6200EE',
+      secondary: '#bb86fc'
+    }
+  },
+  style: {
+    itemPadding: '5px'
   }
 })
 
