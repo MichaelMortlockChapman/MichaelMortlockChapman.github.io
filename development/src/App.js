@@ -5,6 +5,7 @@ import { ThemeProvider } from '@emotion/react'
 import Navbar from './pages/Navbar'
 import Frontpage from './pages/Frontpage'
 import Construction from './pages/Construction'
+import Slash from './pages/Slash'
 
 const theme = createTheme({
   palette: {
@@ -23,8 +24,11 @@ function App () {
     <BrowserRouter>
       <ThemeProvider theme={theme}>
         <Routes>
-          <Route path="/" element={<Navbar/>}>
-            <Route path="home" element={<Frontpage/>}/>
+          <Route path='' element={<Slash/>}/>
+          <Route element={<Navbar/>}>
+            <Route path="about" element={<Frontpage/>}/>
+            <Route path="contact" element={<Construction/>}/>
+            <Route path="projects" element={<Construction/>}/>
           </Route>
         </Routes>
       </ThemeProvider>

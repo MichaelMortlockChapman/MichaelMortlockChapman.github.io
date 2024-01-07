@@ -1,19 +1,19 @@
-import { Outlet } from 'react-router-dom'
+import { Outlet, useNavigate } from 'react-router-dom'
 import { AppBar, Box, Button, Toolbar, Typography } from '@mui/material'
-// import HomeIcon from '../components/HomeIcon'
 
-const navItems = ['About', 'Contact', 'Projects']
+const navItems = [['About', '/about'], ['Contact', '/contact'], ['Projects', '/projects']]
 
 export default function Navbar () {
+  const navigate = useNavigate()
   return (
     <>
       <Box style={{ flexGrow: 1, height: 'fit-content' }}>
         <AppBar position='static'>
           <Toolbar component="nav" sx={{ justifyContent: 'end', overflowX: 'auto' }}>
-            {navItems.map((str) =>
-              <Button variant="text" key={str}>
+            {navItems.map((pageObj) =>
+              <Button variant="text" key={pageObj[0]} onClick={() => navigate(pageObj[1])}>
                 <Typography color="white">
-                  {str}
+                  {pageObj[0]}
                 </Typography>
               </Button>
             )}
