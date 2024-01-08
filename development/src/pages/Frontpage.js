@@ -1,6 +1,8 @@
 import { Box, Stack, Typography } from '@mui/material'
 import Paper from '@mui/material/Paper'
 import { useTheme } from '@emotion/react'
+import { useMediaQuery } from 'react-responsive'
+import PropTypes from 'prop-types'
 
 const progLang = ['C', 'C++', 'C#', 'Java', 'JavaScript', 'ReactJS', 'HTML & CSS', 'Python']
 const tech = ['SQL', 'Git', 'Unity', 'UE5']
@@ -30,14 +32,33 @@ function listView (theme, list) {
   )
 }
 
+function ProfilePicItem ({ theme }) {
+  return (
+    <Box sx={{ width: 'fit-content' }}>
+      <Paper sx={{ width: 'fit-content', height: 'fit-content' }}>
+        <div style={{ padding: theme.style.itemPadding, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+          <img src="/me.jpg" alt='profile image' style={{
+            height: '200px'
+          }}/>
+        </div>
+      </Paper>
+    </Box>
+  )
+}
+ProfilePicItem.propTypes = {
+  theme: PropTypes.object.isRequired
+}
+
 export default function Frontpage () {
   const theme = useTheme()
+  const isMobile = useMediaQuery({ maxWidth: '600px' })
 
   return (
-    <Box sx={{ display: 'flex', justifyContent: 'center', margin: '2px', marginTop: '15px' }}>
+    <Box sx={{ display: 'flex', justifyContent: 'center', margin: '15px' }}>
       <Box sx={{ maxWidth: '800px' }}>
         <Stack spacing={2} direction={'row'}>
           <Stack spacing={2}>
+            {isMobile && <ProfilePicItem theme={theme}/> }
             <Paper sx={{ height: 'fit-content' }}>
               <Typography sx={{ padding: theme.style.itemPadding, fontWeight: 'normal' }} variant='h5'>
                 Hi, I&apos;m <span style={{ fontWeight: 'bold' }}>Michael</span>.
@@ -58,17 +79,11 @@ export default function Frontpage () {
               {listView(theme, tech)}
             </Box>
           </Stack>
-          <Stack spacing={2} sx={{ width: 'fit-content' }}>
-            <Box sx={{ width: 'fit-content' }}>
-              <Paper sx={{ width: 'fit-content', height: 'fit-content' }}>
-                <div style={{ padding: theme.style.itemPadding, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                  <img src="/me.jpg" alt='profile image' style={{
-                    height: '200px'
-                  }}/>
-                </div>
-              </Paper>
-            </Box>
-          </Stack>
+          {!isMobile && 
+            <Stack spacing={2} sx={{ width: 'fit-content' }}>
+              <ProfilePicItem theme={theme}/>
+            </Stack>
+          }
         </Stack>
       </Box>
     </Box>
