@@ -1,7 +1,7 @@
 import { Outlet, useNavigate } from 'react-router-dom'
 import { AppBar, Box, Button, Toolbar, Typography } from '@mui/material'
 
-const navItems = [['About', '/about'], /* ['Contact', '/contact'], */ ['Projects', '/projects']]
+const navItems = [['About', '/about'], ['Projects', '/projects']]
 
 export default function Navbar () {
   const navigate = useNavigate()

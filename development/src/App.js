@@ -6,6 +6,7 @@ import Navbar from './pages/Navbar'
 import Frontpage from './pages/Frontpage'
 import Construction from './pages/Construction'
 import Slash from './pages/Slash'
+import Page404 from './pages/Page404'
 
 const theme = createTheme({
   palette: {
@@ -25,10 +26,10 @@ function App () {
     <BrowserRouter>
       <ThemeProvider theme={theme}>
         <Routes>
+          <Route path='*' element={<Page404/>}/>
           <Route path='' element={<Slash/>}/>
           <Route element={<Navbar/>}>
             <Route path="about" element={<Frontpage/>}/>
-            {/* <Route path="contact" element={<Construction/>}/> */}
             <Route path="projects" element={<Construction/>}/>
           </Route>
         </Routes>
