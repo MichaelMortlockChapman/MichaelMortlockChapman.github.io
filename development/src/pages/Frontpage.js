@@ -17,7 +17,7 @@ function listView (theme, list) {
               display: 'inline-block',
               backgroundColor: theme.palette.primary.main, 
               color: 'white',
-              margin: '5px 5px 0px 0px', 
+              margin: '2px 5px 0px 2px', 
               borderRadius: '5px', 
               padding: '5px' 
             }}
@@ -78,6 +78,15 @@ export default function Frontpage () {
             <Box>
               {listView(theme, tech)}
             </Box>
+            <Paper sx={{ height: 'fit-content', width: 'fit-content', paddingRight: '10px' }}>
+              <Typography sx={{ padding: theme.style.itemPadding, fontWeight: 'bold' }} variant='body2'>
+                Contact me at:
+              </Typography>
+              <Typography sx={{ padding: theme.style.itemPadding }} variant='body2'>
+                <a href="mailto: mmortlockchapman@gmail.com" rel="noreferrer" target="_blank">mmortlockchapman@gmail.com</a><br/>
+                <a href="https://www.linkedin.com/in/m-mortlock-chapman/" rel="noreferrer" target="_blank">www.linkedin.com/in/m-mortlock-chapman/</a>
+              </Typography>
+            </Paper>
           </Stack>
           {!isMobile && 
             <Stack spacing={2} sx={{ width: 'fit-content' }}>
