@@ -23,7 +23,7 @@ function listView (theme, list) {
               padding: '5px' 
             }}
           >
-            <Typography variant='body2'>
+            <Typography variant='body1'>
               {v}
             </Typography>
           </div>
@@ -58,15 +58,15 @@ export default function Frontpage () {
   return (
     <>
       <Box sx={{ display: 'flex', justifyContent: 'center', margin: '15px', marginBottom: changeFooterStyle ? '70px' : '0' }}>
-        <Box sx={{ maxWidth: '800px' }}>
+        <Box sx={{ maxWidth: '1000px' }}>
           <Stack spacing={2} direction={'row'}>
             <Stack spacing={2}>
               {isMobile && <ProfilePicItem theme={theme}/> }
               <Paper sx={{ height: 'fit-content' }}>
-                <Typography sx={{ padding: theme.style.itemPadding, fontWeight: 'normal' }} variant='h5'>
+                <Typography sx={{ padding: theme.style.itemPadding, fontWeight: 'normal' }} variant='h4'>
                   Hi, I&apos;m <span style={{ fontWeight: 'bold' }}>Michael</span>.
                 </Typography>
-                <Typography sx={{ padding: theme.style.itemPadding }} variant='body2'>
+                <Typography sx={{ padding: theme.style.itemPadding }} variant='body1'>
                   I am a highly motivated recent Bachelor of Computer Science graduate. 
                   My major is in artificial intelligence with a minor in information systems. 
                   My passion is to develop and maintain excellent software and to further my skills 
@@ -81,10 +81,10 @@ export default function Frontpage () {
                 {listView(theme, tech)}
               </Box>
               <Paper sx={{ height: 'fit-content', width: 'fit-content', paddingRight: '10px' }}>
-                <Typography sx={{ padding: theme.style.itemPadding, fontWeight: 'bold' }} variant='body2'>
+                <Typography sx={{ padding: theme.style.itemPadding, fontWeight: 'bold' }} variant='body1'>
                   Contact me at:
                 </Typography>
-                <Typography sx={{ padding: theme.style.itemPadding }} variant='body2'>
+                <Typography sx={{ padding: theme.style.itemPadding }} variant='body1'>
                   <a href="mailto: mmortlockchapman@gmail.com" rel="noreferrer" target="_blank">mmortlockchapman@gmail.com</a><br/>
                   <a href="https://www.linkedin.com/in/m-mortlock-chapman/" rel="noreferrer" target="_blank">www.linkedin.com/in/m-mortlock-chapman/</a>
                 </Typography>
