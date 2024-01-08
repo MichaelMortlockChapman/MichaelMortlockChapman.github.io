@@ -1,6 +1,5 @@
-import { Box, Grid, Stack, Typography } from '@mui/material'
+import { Box, Stack, Typography } from '@mui/material'
 import Paper from '@mui/material/Paper'
-// import Masonry from '@mui/lab/Masonry'
 import { useTheme } from '@emotion/react'
 
 const progLang = ['C', 'C++', 'C#', 'Java', 'JavaScript', 'ReactJS', 'HTML & CSS', 'Python']
@@ -35,9 +34,9 @@ export default function Frontpage () {
   const theme = useTheme()
 
   return (
-    <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-      <Grid container spacing={2} sx={{ margin: '2px', maxWidth: '1000px', width: 'fit-content' }}>
-        <Grid item xs={6}>
+    <Box sx={{ display: 'flex', justifyContent: 'center', margin: '2px', marginTop: '15px' }}>
+      <Box sx={{ maxWidth: '800px' }}>
+        <Stack spacing={2} direction={'row'}>
           <Stack spacing={2}>
             <Paper sx={{ height: 'fit-content' }}>
               <Typography sx={{ padding: theme.style.itemPadding, fontWeight: 'normal' }} variant='h5'>
@@ -59,8 +58,6 @@ export default function Frontpage () {
               {listView(theme, tech)}
             </Box>
           </Stack>
-        </Grid>
-        <Grid item xs={6} sx={{ width: 'fit-content' }}>
           <Stack spacing={2} sx={{ width: 'fit-content' }}>
             <Box sx={{ width: 'fit-content' }}>
               <Paper sx={{ width: 'fit-content', height: 'fit-content' }}>
@@ -72,8 +69,8 @@ export default function Frontpage () {
               </Paper>
             </Box>
           </Stack>
-        </Grid>
-      </Grid>
+        </Stack>
+      </Box>
     </Box>
   )
 }
