@@ -10,9 +10,10 @@ import Slash from './pages/Slash'
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#6200EE',
-      secondary: '#bb86fc'
-    }
+      main: '#7FC7D9',
+      secondary: '#365486'
+    },
+    list: ['#DCF2F1', '#7FC7D9', '#365486', '#0F1035']
   },
   style: {
     itemPadding: '5px'

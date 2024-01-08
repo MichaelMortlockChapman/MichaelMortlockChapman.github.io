@@ -16,8 +16,8 @@ function listView (theme, list) {
           <div key={v}
             style={{ 
               display: 'inline-block',
-              backgroundColor: theme.palette.primary.main, 
-              color: 'white',
+              backgroundColor: theme.palette.list[i % 4], 
+              color: i % 4 === 0 ? 'black' : 'white',
               margin: '2px 5px 0px 2px', 
               borderRadius: '5px', 
               padding: '5px' 
@@ -36,9 +36,9 @@ function listView (theme, list) {
 function ProfilePicItem ({ theme }) {
   return (
     <Box sx={{ width: 'fit-content' }}>
-      <Paper sx={{ width: 'fit-content', height: 'fit-content' }}>
+      <Paper sx={{ width: 'fit-content', height: 'fit-content', backgroundColor: theme.palette.primary.main, borderRadius: '100%' }}>
         <div style={{ padding: theme.style.itemPadding, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-          <img src="/me.jpg" alt='profile image' style={{
+          <img src="/me.png" alt='profile image' style={{
             height: '200px'
           }}/>
         </div>
@@ -68,11 +68,10 @@ export default function Frontpage () {
                 </Typography>
                 <Typography sx={{ padding: theme.style.itemPadding }} variant='body2'>
                   I am a highly motivated recent Bachelor of Computer Science graduate. 
-                  My major is artificial intelligence with a minor in information systems. 
-                  My passion is to develop and maintain excellent software and further my 
-                  skills and knowledge in the industry. I am hard working, collegiate and 
-                  eager to find a position where I can demonstrate my ability and
-                  passion for this field.
+                  My major is in artificial intelligence with a minor in information systems. 
+                  My passion is to develop and maintain excellent software and to further my skills 
+                  and knowledge in the industry. I am hard working, collegiate and eager to find a 
+                  position where I can demonstrate my ability and passion for this field.
                 </Typography>
               </Paper>
               <Box>
@@ -99,7 +98,7 @@ export default function Frontpage () {
           </Stack>
         </Box>
       </Box>
-      <div style={{ display: 'inline-block', position: changeFooterStyle ? '' : 'absolute', bottom: 0, width: '100%', zIndex: -1 }}>
+      <div style={{ position: changeFooterStyle ? '' : 'absolute', bottom: 0, width: '100%', zIndex: -1 }}>
         <div >
           <Waves style={{ height: '150px', width: '100%', position: 'relative', top: '4px' }}/>
         </div>
