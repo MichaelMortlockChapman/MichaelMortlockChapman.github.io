@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 import { useEffect, useRef, useState } from 'react'
 import { Button, Stack, Typography } from '@mui/material'
+import GameBoi from './GameBoi'
 
 export default function Snake () {
   const width = 20
@@ -21,13 +22,13 @@ export default function Snake () {
   const findColour = (val) => {
     switch (val) {
     case 0:
-      return 'white'
+      return '#ffffff00'
     case 1:
       return 'green'
     case 2:
       return 'Red'
     default:
-      return 'white'
+      return '#ffffff00'
     }
   }
 
@@ -137,6 +138,7 @@ export default function Snake () {
   }
 
   useEffect(() => {
+    setGrid(createGrid(gridArr.current))
     return () => {
       console.log(`cleared ${timerID.current}`)
       clearInterval(timerID.current)
@@ -158,21 +160,24 @@ export default function Snake () {
   }
 
   return (
-    <Stack direction='row' justifyContent='center' alignContent='center'>  
-      <div>
-        {(!started && !gameOver) && <div>
-          <Button onClick={handleStartGame}>Click to Start</Button>
-        </div>}
-        {gameOver && <div>
-          <Typography>Game Over!</Typography>
-          <Button onClick={handleStartGame}>Click to Play Again</Button> 
-        </div>}
-        {started && <div>  
-          {grid}
-          <input type='text' id='one' onKeyDown={handleKeyPress}/>      
-          <br/>{`${direction.current[0]}:${direction.current[1]}`}
-        </div>}
-      </div>
-    </Stack>
+    <GameBoi
+      handleUpButton={() => { direction.current = [-1, 0] }}
+      handleDownButton={() => { direction.current = [1, 0] }}
+      handleRightButton={() => { direction.current = [0, 1] }}
+      handleLeftButton={() => { direction.current = [0, -1] }}
+    >
+      {(!started && !gameOver) && <div>
+        <Button onClick={handleStartGame}>Click to Start</Button>
+      </div>}
+      {gameOver && <div>
+        <Typography>Game Over!</Typography>
+        <Button onClick={handleStartGame}>Click to Play Again</Button> 
+      </div>}
+      {started && <div>  
+        {grid}
+        <input type='text' id='one' onKeyDown={handleKeyPress}/>      
+        <br/>{`${direction.current[0]}:${direction.current[1]}`}
+      </div>}
+    </GameBoi>
   )
 }

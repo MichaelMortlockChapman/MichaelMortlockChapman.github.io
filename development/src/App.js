@@ -7,7 +7,6 @@ import Frontpage from './pages/Frontpage'
 // import Construction from './pages/Construction'
 import Slash from './pages/Slash'
 import Page404 from './pages/Page404'
-import ExampleProject from './ExampleProject/ExampleProject'
 import ProjectsPage from './pages/ProjectsPage'
 import Snake from './ExampleProject/Snake'
 
@@ -34,7 +33,6 @@ function App () {
           <Route element={<Navbar/>}>
             <Route path="about" element={<Frontpage/>}/>
             <Route path="projects" element={<ProjectsPage/>}/>
-            <Route path="exampleProject" element={<ExampleProject/>}/>
             <Route path="snake" element={<Snake/>}/>
           </Route>
         </Routes>
