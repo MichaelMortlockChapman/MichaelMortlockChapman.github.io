@@ -120,7 +120,7 @@ export default function GameBoi (props) {
           borderStyle: 'solid',
           borderRadius: '15px'
         }}>
-          <div style={{ width: 'fit-content' }}>
+          <div style={{ width: 'fit-content', position: 'relative' }}>
             {props.children}
           </div>
         </div>
@@ -129,8 +129,30 @@ export default function GameBoi (props) {
           {rightButtons}
         </Stack>
         <Stack direction='row' alignContent='center' justifyContent='center' gap='5px' sx={{ paddingTop: '15px' }}>
-          <button onClick={handleMenuButton}><Typography>Menu</Typography></button>
-          <button onClick={handleStartButton}><Typography>Start</Typography></button>
+          <Stack direction='column' alignItems='center'>
+            <Button style={{ 
+              backgroundColor: 'green', 
+              height: '20px', 
+              border: '1px solid green',
+              width: '50px',
+              borderRadius: '15px',
+              padding: 0,
+              margin: '0px 10px 0px 10px'
+            }} onClick={handleMenuButton}/>
+            <Typography sx={{ color: 'green' }}>Menu</Typography>
+          </Stack>
+          <Stack direction='column' alignItems='center'>
+            <Button style={{ 
+              backgroundColor: 'green', 
+              height: '20px', 
+              border: '1px solid green',
+              width: '50px',
+              borderRadius: '15px',
+              padding: 0,
+              margin: '0px 10px 0px 10px'
+            }} onClick={handleStartButton}/>
+            <Typography sx={{ color: 'green' }}>Start</Typography>
+          </Stack>
         </Stack>
       </div>
     </Stack>
@@ -138,7 +160,7 @@ export default function GameBoi (props) {
 }
 
 GameBoi.propTypes = {
-  children: PropTypes.element,
+  children: PropTypes.any,
   handleUpButton: PropTypes.func,
   handleDownButton: PropTypes.func,
   handleLeftButton: PropTypes.func,

@@ -1,9 +1,13 @@
 /* eslint-disable no-unused-vars */
 import { useEffect, useRef, useState } from 'react'
-import { Button, Stack, Typography } from '@mui/material'
+import { Button, FormControlLabel, Stack, Typography } from '@mui/material'
+import Checkbox from '@mui/material/Checkbox'
 import GameBoi from './GameBoi'
+import { useTheme } from '@emotion/react'
 
 export default function Snake () {
+  const theme = useTheme()
+
   const width = 20
   const height = 20
 
@@ -87,8 +91,13 @@ export default function Snake () {
     }
   }
 
+  const [pausedState, setPausedState] = useState(false)
+  const paused = useRef(false)
   const update = () => {
     console.log('update')
+    if (paused.current) {
+      return
+    }
     const _gridArr = JSON.parse(JSON.stringify(gridArr.current))
     const _snake = JSON.parse(JSON.stringify(snake.current))
     for (let i = 0; i < _snake.length; i++) {
@@ -159,25 +168,52 @@ export default function Snake () {
     direction.current = newDir
   }
 
+  const menuStyle = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    backgroundColor: 'lightgrey',
+    border: '1px solid black',
+    color: 'black'
+  }
+
   return (
-    <GameBoi
-      handleUpButton={() => { direction.current = [-1, 0] }}
-      handleDownButton={() => { direction.current = [1, 0] }}
-      handleRightButton={() => { direction.current = [0, 1] }}
-      handleLeftButton={() => { direction.current = [0, -1] }}
-    >
-      {(!started && !gameOver) && <div>
-        <Button onClick={handleStartGame}>Click to Start</Button>
-      </div>}
-      {gameOver && <div>
-        <Typography>Game Over!</Typography>
-        <Button onClick={handleStartGame}>Click to Play Again</Button> 
-      </div>}
-      {started && <div>  
+    <>
+      <GameBoi
+        handleUpButton={() => { direction.current = [-1, 0] }}
+        handleDownButton={() => { direction.current = [1, 0] }}
+        handleRightButton={() => { direction.current = [0, 1] }}
+        handleLeftButton={() => { direction.current = [0, -1] }}
+        handleMenuButton={() => { 
+          if (!gameOver && started) {
+            setPausedState(!pausedState)
+            paused.current = !paused.current
+          }
+        }}
+      >
         {grid}
-        <input type='text' id='one' onKeyDown={handleKeyPress}/>      
-        <br/>{`${direction.current[0]}:${direction.current[1]}`}
-      </div>}
-    </GameBoi>
+        {(!started && !gameOver) && (
+          <Stack sx={ menuStyle } alignItems='center'>
+            
+            <Button onClick={handleStartGame} sx={{ color: 'black' }}>Start</Button>
+          </Stack>
+        )}
+        {gameOver && (
+          <Stack sx={ menuStyle } direction='column' alignItems='center' >
+            <Typography>Game Over!</Typography>
+            <Button onClick={handleStartGame} sx={{ color: 'black' }}>Play Again</Button>
+            <Button sx={{ color: 'black' }}>Exit to Menu</Button>
+          </Stack>
+        )}
+        {pausedState && (
+          <div style={ menuStyle }>
+            <Typography>Paused</Typography>
+          </div>
+        )}
+      </GameBoi>
+      {/* <FormControlLabel control={<Checkbox defaultChecked color='error' />} label='on'/>
+      <FormControlLabel control={<Checkbox color='error' />} label='off'/> */}
+    </>
   )
 }
