@@ -1,7 +1,12 @@
 /* eslint-disable no-unused-vars */
 import { useEffect, useRef, useState } from 'react'
-import { Button, FormControlLabel, Stack, Typography } from '@mui/material'
-import Checkbox from '@mui/material/Checkbox'
+import { Button, Stack, Typography } from '@mui/material'
+import Radio from '@mui/material/Radio'
+import RadioGroup from '@mui/material/RadioGroup'
+import FormControlLabel from '@mui/material/FormControlLabel'
+import FormControl from '@mui/material/FormControl'
+import FormLabel from '@mui/material/FormLabel'
+
 import GameBoi from './GameBoi'
 import { useTheme } from '@emotion/react'
 
@@ -91,6 +96,9 @@ export default function Snake () {
     }
   }
 
+  const [portals, setPortals] = useState('off')
+  const handlePortalSelection = (e) => { setPortals(e.target.value) }
+
   const [pausedState, setPausedState] = useState(false)
   const paused = useRef(false)
   const update = () => {
@@ -145,6 +153,12 @@ export default function Snake () {
     setStarted(false)
     setGameOver(true)
   }
+  const handleStartMainMenu = () => {
+    gridArr.current = createGridArr(width, height)
+    setGrid(createGrid(gridArr.current))
+    setStarted(false)
+    setGameOver(false)
+  }
 
   useEffect(() => {
     setGrid(createGrid(gridArr.current))
@@ -175,7 +189,17 @@ export default function Snake () {
     transform: 'translate(-50%, -50%)',
     backgroundColor: 'lightgrey',
     border: '1px solid black',
-    color: 'black'
+    color: 'black',
+    padding: '3px'
+  }
+
+  const menuButtonFontStyle = { color: 'green', fontWeight: 'bolder' }
+
+  const handleMenuButton = () => { 
+    if (!gameOver && started) {
+      setPausedState(!pausedState)
+      paused.current = !paused.current
+    }
   }
 
   return (
@@ -185,25 +209,32 @@ export default function Snake () {
         handleDownButton={() => { direction.current = [1, 0] }}
         handleRightButton={() => { direction.current = [0, 1] }}
         handleLeftButton={() => { direction.current = [0, -1] }}
-        handleMenuButton={() => { 
-          if (!gameOver && started) {
-            setPausedState(!pausedState)
-            paused.current = !paused.current
-          }
-        }}
+        handleMenuButton={handleMenuButton}
+        handleStartButton={handleMenuButton}
       >
         {grid}
         {(!started && !gameOver) && (
           <Stack sx={ menuStyle } alignItems='center'>
-            
-            <Button onClick={handleStartGame} sx={{ color: 'black' }}>Start</Button>
+            <FormControl sx={{ display: 'flex', alignItems: 'center', paddingLeft: '5px' }}>
+              <FormLabel sx={{ color: 'black !important' }}>Portals</FormLabel>
+              <RadioGroup
+                row
+                name="radio-buttons-group-portal-selection"
+                value={portals}
+                onChange={handlePortalSelection}
+              >
+                <FormControlLabel value="on" control={<Radio />} label="On" />
+                <FormControlLabel value="off" control={<Radio />} label="Off" />
+              </RadioGroup>
+            </FormControl>
+            <Button onClick={handleStartGame} sx={menuButtonFontStyle}>Start</Button>
           </Stack>
         )}
         {gameOver && (
           <Stack sx={ menuStyle } direction='column' alignItems='center' >
             <Typography>Game Over!</Typography>
-            <Button onClick={handleStartGame} sx={{ color: 'black' }}>Play Again</Button>
-            <Button sx={{ color: 'black' }}>Exit to Menu</Button>
+            <Button onClick={handleStartGame} sx={menuButtonFontStyle}>Play Again</Button>
+            <Button onClick={handleStartMainMenu} sx={menuButtonFontStyle}>Exit to Menu</Button>
           </Stack>
         )}
         {pausedState && (
@@ -212,8 +243,6 @@ export default function Snake () {
           </div>
         )}
       </GameBoi>
-      {/* <FormControlLabel control={<Checkbox defaultChecked color='error' />} label='on'/>
-      <FormControlLabel control={<Checkbox color='error' />} label='off'/> */}
     </>
   )
 }
