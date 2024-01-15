@@ -5,7 +5,7 @@ export default function Slash () {
   const navigate = useNavigate()
 
   useEffect(() => {
-    navigate('/about')
+    navigate('/home')
   })
   return <></>
 }

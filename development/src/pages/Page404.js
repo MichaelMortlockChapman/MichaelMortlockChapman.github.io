@@ -5,7 +5,7 @@ export default function Page404 () {
   const navigate = useNavigate()
 
   useEffect(() => {
-    navigate('/about')
+    navigate('/home')
   })
   return (
     <>

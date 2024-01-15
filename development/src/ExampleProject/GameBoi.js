@@ -11,8 +11,6 @@ export default function GameBoi (props) {
     handleRightButton,
     handleAButton,
     handleBButton,
-    handleCButton,
-    handleDButton,
     handleMenuButton,
     handleStartButton
   } = props
@@ -25,10 +23,10 @@ export default function GameBoi (props) {
     alignItems: 'center'
   }
   const dpadButtonStyle = { 
-    backgroundColor: 'black', 
+    backgroundColor: 'grey', 
     ...dpadEmptyStyle
   }
-  const dpadButton = (handleButton) => <IconButton onClick={handleButton}><div style={{
+  const dpadButton = (handleButton) => <IconButton onClick={handleButton} sx={{ backgroundColor: 'lightgrey', borderRadius: '5px' }}><div style={{
     backgroundColor: 'white',
     width: '0.8rem', 
     height: '0.8rem',
@@ -40,17 +38,17 @@ export default function GameBoi (props) {
       <tbody>
         <tr>
           <td style={dpadEmptyStyle}></td>
-          <td style={dpadButtonStyle}>{dpadButton(handleUpButton)}</td>
+          <td style={{ ...dpadButtonStyle, borderTopRightRadius: '10px', borderTopLeftRadius: '10px' }}>{dpadButton(handleUpButton)}</td>
           <td style={dpadEmptyStyle}></td>
         </tr>
         <tr>
-          <td style={dpadButtonStyle}>{dpadButton(handleLeftButton)}</td>
+          <td style={{ ...dpadButtonStyle, borderBottomLeftRadius: '10px', borderTopLeftRadius: '10px' }}>{dpadButton(handleLeftButton)}</td>
           <td style={dpadButtonStyle}></td>
-          <td style={dpadButtonStyle}>{dpadButton(handleRightButton)}</td>
+          <td style={{ ...dpadButtonStyle, borderBottomRightRadius: '10px', borderTopRightRadius: '10px' }}>{dpadButton(handleRightButton)}</td>
         </tr>
         <tr>
           <td style={dpadEmptyStyle}></td>
-          <td style={dpadButtonStyle}>{dpadButton(handleDownButton)}</td>
+          <td style={{ ...dpadButtonStyle, borderBottomRightRadius: '10px', borderBottomLeftRadius: '10px' }}>{dpadButton(handleDownButton)}</td>
           <td style={dpadEmptyStyle}></td>
         </tr>
       </tbody>
@@ -61,48 +59,36 @@ export default function GameBoi (props) {
     ...dpadEmptyStyle
   }
   const RightButton = (textChar, handleButton) => (
-    <IconButton onClick={handleButton}
-      style={{
-        backgroundColor: 'black',
-        width: '1.8rem', 
-        height: '1.8rem',
-        borderRadius: '100%',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        border: '2px',
-        borderColor: 'grey',
-        borderStyle: 'solid'
-      }}
-    ><Typography sx={{ fontWeight: 'bolder', color: 'grey' }}>{textChar}</Typography></IconButton>
+    <Stack sx={{ transform: 'rotate(-35deg)' }}>
+      <IconButton onClick={handleButton}
+        style={{
+          backgroundColor: 'lightgrey',
+          width: '2.5rem', 
+          height: '2.5rem',
+          borderRadius: '100%',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          border: '2px',
+          borderColor: 'grey',
+          borderStyle: 'solid'
+        }}
+      />
+      <Typography sx={{ fontWeight: 'bolder', color: 'grey', textAlign: 'center' }}>{textChar}</Typography>
+    </Stack>
   )
 
   const rightButtons = (
-    <table style={{ borderCollapse: 'collapse' }}>
-      <tbody>
-        <tr>
-          <td style={rightButtonsStyle}></td>
-          <td style={rightButtonsStyle}>{RightButton('A', handleAButton)}</td>
-          <td style={rightButtonsStyle}></td>
-        </tr>
-        <tr>
-          <td style={rightButtonsStyle}>{RightButton('B', handleBButton)}</td>
-          <td style={rightButtonsStyle}></td>
-          <td style={rightButtonsStyle}>{RightButton('C', handleCButton)}</td>
-        </tr>
-        <tr>
-          <td style={rightButtonsStyle}></td>
-          <td style={rightButtonsStyle}>{RightButton('D', handleDButton)}</td>
-          <td style={rightButtonsStyle}></td>
-        </tr>
-      </tbody>
-    </table>
+    <div style={{ display: 'flex', alignItems: 'center', height: '100' }}>
+      <div style={{ ...rightButtonsStyle, marginTop: '20px', marginRight: '10px' }}>{RightButton('B', handleBButton)}</div>
+      <div style={{ ...rightButtonsStyle, marginBottom: '20px' }}>{RightButton('A', handleAButton)}</div>
+    </div>
   )
 
   return (
     <Stack direction='row' justifyContent='center' alignContent='center'>  
       <div style={{
-        padding: '20px 50px 60px 50px',
+        padding: '25px 20px 60px 20px',
         backgroundColor: 'lightgreen',
         border: '5px',
         borderColor: 'black',
@@ -114,8 +100,8 @@ export default function GameBoi (props) {
           padding: '10px',
           backgroundColor: 'lightgrey',
           border: '10px',
-          borderRight: '20px',
-          borderLeft: '20px',
+          borderRight: '40px',
+          borderLeft: '40px',
           borderColor: 'black',
           borderStyle: 'solid',
           borderRadius: '15px'
@@ -167,8 +153,6 @@ GameBoi.propTypes = {
   handleRightButton: PropTypes.func,
   handleAButton: PropTypes.func,
   handleBButton: PropTypes.func,
-  handleCButton: PropTypes.func,
-  handleDButton: PropTypes.func,
   handleMenuButton: PropTypes.func,
   handleStartButton: PropTypes.func
 }

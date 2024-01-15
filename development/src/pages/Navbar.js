@@ -2,7 +2,7 @@ import { Outlet, useNavigate } from 'react-router-dom'
 import { AppBar, Box, Button, Toolbar, Typography } from '@mui/material'
 import { useTheme } from '@emotion/react'
 
-const navItems = [['About', '/about'], ['Projects', '/projects']]
+const navItems = [['Home', '/home'], ['Projects', '/projects']]
 
 export default function Navbar () {
   const navigate = useNavigate()

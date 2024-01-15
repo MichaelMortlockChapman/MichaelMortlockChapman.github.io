@@ -31,7 +31,7 @@ function App () {
           <Route path='*' element={<Page404/>}/>
           <Route path='' element={<Slash/>}/>
           <Route element={<Navbar/>}>
-            <Route path="about" element={<Frontpage/>}/>
+            <Route path="home" element={<Frontpage/>}/>
             <Route path="projects" element={<ProjectsPage/>}/>
             <Route path="snake" element={<Snake/>}/>
           </Route>

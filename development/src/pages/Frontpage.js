@@ -4,6 +4,8 @@ import { useTheme } from '@emotion/react'
 import { useMediaQuery } from 'react-responsive'
 import PropTypes from 'prop-types'
 import Waves from '../components/waves/Waves'
+import Cloud from '../components/clouds/Cloud'
+import { randInt } from '../util'
 
 const progLang = ['C', 'C++', 'C#', 'Java', 'JavaScript', 'ReactJS', 'HTML & CSS', 'Python']
 const tech = ['SQL', 'Git', 'Unity', 'UE5']
@@ -55,8 +57,42 @@ export default function Frontpage () {
   const isMobile = useMediaQuery({ maxWidth: '600px' })
   const changeFooterStyle = useMediaQuery({ maxWidth: '700px' })
 
+  const smallSloudSize = useMediaQuery({ maxWidth: '1200px' })
+  const smallCloudHeight = useMediaQuery({ maxWidth: '1000px' })
+
+  const createCloudSize = (s = 0.02) => {
+    let r = s
+    if (smallSloudSize) {
+      r *= 2
+    }
+    return `calc(100vw * ${r})`
+  }
+  const createCloudPositionHeight = (s = 0.2) => {
+    let r = s
+    r *= 2
+    if (isMobile) {
+      r += -0.2
+      r *= 2
+    } else if (smallCloudHeight) {
+      r += 0.05
+    }
+    return `calc(100vh * ${r})`
+  }
+  const randColor = () => theme.palette.list[randInt(0, theme.palette.list.length)]
+
   return (
     <>
+      {/* clouds */}
+      <div style={{ position: 'relative', height: '150px' }}>
+        <Cloud cloudHeight={createCloudSize(0.07)} cloudPositionHeight={createCloudPositionHeight(0.26)} fillColor={randColor()} delay='-9s'/>
+        <Cloud cloudHeight={createCloudSize(0.05)} cloudPositionHeight={createCloudPositionHeight(0.1)} fillColor={randColor()} delay='-5s'/>
+        <Cloud cloudHeight={createCloudSize(0.03)} cloudPositionHeight={createCloudPositionHeight(0.15)} fillColor={randColor()} delay='-7s'/>
+        <Cloud cloudHeight={createCloudSize(0.03)} cloudPositionHeight={createCloudPositionHeight()} fillColor={randColor()} delay='-1s'/>
+        <Cloud cloudHeight={createCloudSize(0.05)} cloudPositionHeight={createCloudPositionHeight()} fillColor={randColor()} delay='-3s'/>
+        <Cloud cloudHeight={createCloudSize(0.07)} cloudPositionHeight={createCloudPositionHeight(0.3)} fillColor={randColor()} delay='-1.5s'/>
+        <Cloud cloudHeight={createCloudSize(0.04)} cloudPositionHeight={createCloudPositionHeight(0.01)} fillColor={randColor()} delay='-4s'/>
+      </div>
+      {/* info */}
       <Box sx={{ display: 'flex', justifyContent: 'center', margin: '15px', marginBottom: changeFooterStyle ? '70px' : '0' }}>
         <Box sx={{ maxWidth: '1000px' }}>
           <Stack spacing={2} direction={'row'}>
@@ -98,6 +134,7 @@ export default function Frontpage () {
           </Stack>
         </Box>
       </Box>
+      {/* waves */}
       <div style={{ position: changeFooterStyle ? '' : 'absolute', bottom: 0, width: '100%', zIndex: -1 }}>
         <div >
           <Waves style={{ height: '150px', width: '100%', position: 'relative', top: '4px' }}/>
