@@ -4,7 +4,7 @@ import { createTheme } from '@mui/material/styles'
 import { ThemeProvider } from '@emotion/react'
 import Navbar from './pages/Navbar'
 import Frontpage from './pages/Frontpage'
-// import Construction from './pages/Construction'
+import Construction from './pages/Construction'
 import Slash from './pages/Slash'
 import Page404 from './pages/Page404'
 import ProjectsPage from './pages/ProjectsPage'
@@ -33,7 +33,7 @@ function App () {
           <Route path='' element={<Slash/>}/>
           <Route element={<Navbar/>}>
             <Route path="home" element={<Frontpage/>}/>
-            <Route path="projects" element={<ProjectsPage/>}/>
+            <Route path="projects" element={<Construction/>}/>
             <Route path="snake" element={<Snake/>}/>
           </Route>
         </Routes>
