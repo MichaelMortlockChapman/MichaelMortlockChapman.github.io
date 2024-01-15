@@ -87,7 +87,7 @@ export default function Frontpage () {
     return `calc(100vh * ${r})`
   }
   const randCloudColor = () => {
-    const randColors = [theme.palette.primary.complementary, ...theme.palette.list]
+    const randColors = [...theme.palette.list]
     return randColors[randInt(0, randColors.length - 1)]
   }
   
