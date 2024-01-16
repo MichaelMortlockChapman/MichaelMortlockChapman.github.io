@@ -1,7 +1,24 @@
 /* eslint-disable no-unused-vars */
-import { useEffect, useRef, useState } from 'react'
 import { Button, IconButton, Stack, Typography } from '@mui/material'
 import PropTypes from 'prop-types'
+import { DownArrow, LeftArrow, RightArrow, UpArrow } from './ArrowSVGs'
+import styled from '@emotion/styled'
+import { useMediaQuery } from 'react-responsive'
+import { useLayoutEffect } from 'react'
+
+const mainColor = 'rgb(61,61,181)'
+const mainAccentColor = 'rgb(40,37,99)'
+const screenBackgroundColor = 'lightgrey'
+const buttonFgColor = 'rgb(38,44,51)'
+const buttonBgColor = 'rgb(84, 93, 102)'
+const buttonDropShadow = { filter: 'drop-shadow(0 0 5px black)' }
+
+const createStyledButton = (backgroundColor) => styled(Button)`
+  :hover {
+    background-color: ${backgroundColor};
+  }
+  `
+const StyledButton = createStyledButton(buttonBgColor)
 
 export default function GameBoi (props) {
   const {
@@ -23,121 +40,154 @@ export default function GameBoi (props) {
     alignItems: 'center'
   }
   const dpadButtonStyle = { 
-    backgroundColor: 'grey', 
+    backgroundColor: buttonBgColor,
     ...dpadEmptyStyle
   }
-  const dpadButton = (handleButton) => <IconButton onClick={handleButton} sx={{ backgroundColor: 'lightgrey', borderRadius: '5px' }}><div style={{
-    backgroundColor: 'white',
-    width: '0.8rem', 
-    height: '0.8rem',
-    borderRadius: '5px'
-  }}/></IconButton>
+
+  // for dpadButton and actionButtons need to create function rather than an element as they were rerendering every 'frame'
+  const dpadButton = (handleButton, icon) => (
+    <IconButton onClick={handleButton} sx={{ }}>
+      {icon}
+    </IconButton>
+  )
 
   const dpad = (
-    <table style={{ borderCollapse: 'collapse' }}>
+    <table style={{ borderCollapse: 'collapse', ...buttonDropShadow }}>
       <tbody>
         <tr>
           <td style={dpadEmptyStyle}></td>
-          <td style={{ ...dpadButtonStyle, borderTopRightRadius: '10px', borderTopLeftRadius: '10px' }}>{dpadButton(handleUpButton)}</td>
+          <td style={{ ...dpadButtonStyle, borderTopRightRadius: '10px', borderTopLeftRadius: '10px' }}>
+            {dpadButton(handleUpButton, <UpArrow fillColor={buttonFgColor}/>)}
+          </td>
           <td style={dpadEmptyStyle}></td>
         </tr>
         <tr>
-          <td style={{ ...dpadButtonStyle, borderBottomLeftRadius: '10px', borderTopLeftRadius: '10px' }}>{dpadButton(handleLeftButton)}</td>
+          <td style={{ ...dpadButtonStyle, borderBottomLeftRadius: '10px', borderTopLeftRadius: '10px' }}>
+            {dpadButton(handleLeftButton, <LeftArrow fillColor={buttonFgColor}/>)}
+          </td>
           <td style={dpadButtonStyle}></td>
-          <td style={{ ...dpadButtonStyle, borderBottomRightRadius: '10px', borderTopRightRadius: '10px' }}>{dpadButton(handleRightButton)}</td>
+          <td style={{ ...dpadButtonStyle, borderBottomRightRadius: '10px', borderTopRightRadius: '10px' }}>
+            {dpadButton(handleRightButton, <RightArrow fillColor={buttonFgColor}/>)}
+          </td>
         </tr>
         <tr>
           <td style={dpadEmptyStyle}></td>
-          <td style={{ ...dpadButtonStyle, borderBottomRightRadius: '10px', borderBottomLeftRadius: '10px' }}>{dpadButton(handleDownButton)}</td>
+          <td style={{ ...dpadButtonStyle, borderBottomRightRadius: '10px', borderBottomLeftRadius: '10px' }}>
+            {dpadButton(handleDownButton, <DownArrow fillColor={buttonFgColor}/>)}
+          </td>
           <td style={dpadEmptyStyle}></td>
         </tr>
       </tbody>
     </table> 
   )
 
-  const rightButtonsStyle = {  
+  const actionButtonsStyle = {  
     ...dpadEmptyStyle
   }
-  const RightButton = (textChar, handleButton) => (
-    <Stack sx={{ transform: 'rotate(-35deg)' }}>
-      <IconButton onClick={handleButton}
-        style={{
-          backgroundColor: 'lightgrey',
-          width: '2.5rem', 
-          height: '2.5rem',
-          borderRadius: '100%',
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          border: '2px',
-          borderColor: 'grey',
-          borderStyle: 'solid'
-        }}
-      />
-      <Typography sx={{ fontWeight: 'bolder', color: 'grey', textAlign: 'center' }}>{textChar}</Typography>
-    </Stack>
+  const actionButton = (textChar, handleButton) => (
+    <IconButton onClick={handleButton}
+      style={{
+        backgroundColor: buttonBgColor,
+        width: '3rem', 
+        height: '3rem',
+        borderRadius: '100%',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        ...buttonDropShadow
+      }}
+    >
+      <Typography sx={{ fontWeight: 'bolder', color: buttonFgColor, textAlign: 'center', fontSize: '1.5rem' }}>{textChar}</Typography>
+    </IconButton>
   )
 
-  const rightButtons = (
+  const actionButtons = (
     <div style={{ display: 'flex', alignItems: 'center', height: '100' }}>
-      <div style={{ ...rightButtonsStyle, marginTop: '20px', marginRight: '10px' }}>{RightButton('B', handleBButton)}</div>
-      <div style={{ ...rightButtonsStyle, marginBottom: '20px' }}>{RightButton('A', handleAButton)}</div>
+      <div style={{ ...actionButtonsStyle, marginTop: '20px', marginRight: '20px' }}>{actionButton('B', handleBButton)}</div>
+      <div style={{ ...actionButtonsStyle, marginBottom: '20px' }}>{actionButton('A', handleAButton)}</div>
     </div>
   )
 
+  const consoleNameCommonStyle = { fontSize: '1.7rem', whiteSpace: 'pre' }
+  const consoleNameStartStyle = { color: 'rgb(106, 167, 188)', fontStyle: 'italic', fontFamily: 'Impact' }
+  const consoleNameEndStyle = { fontFamily: 'Comic Sans MS', letterSpacing: '-2px', fontWeight: 'bolder' }
+
+  // display warning 
+  const isSmallScreen = useMediaQuery({ maxWidth: '490px' })
+  useLayoutEffect(() => {
+    if (isSmallScreen) {
+      alert('Warning: this page was designed for screens larger than 490px, you may experience issues due to your smaller display.')
+    }
+    return () => {}
+  }, [])
+
   return (
-    <Stack direction='row' justifyContent='center' alignContent='center'>  
+    <Stack direction='row' justifyContent='center' alignContent='center' minWidth={'400px'}>  
       <div style={{
         padding: '25px 20px 60px 20px',
-        backgroundColor: 'lightgreen',
+        backgroundColor: mainColor,
         border: '5px',
         borderColor: 'black',
         borderStyle: 'solid',
         borderRadius: '15px',
-        borderBottomRightRadius: '120px'
+        borderBottomLeftRadius: '70px 90px',
+        borderBottomRightRadius: '70px 90px'
       }}>
-        <div style={{
-          padding: '10px',
-          backgroundColor: 'lightgrey',
-          border: '10px',
-          borderRight: '40px',
-          borderLeft: '40px',
-          borderColor: 'black',
-          borderStyle: 'solid',
-          borderRadius: '15px'
-        }}>
-          <div style={{ width: 'fit-content', position: 'relative' }}>
-            {props.children}
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+          <div style={{ 
+            backgroundColor: 'black', 
+            padding: '20px', 
+            paddingBottom: '10px',
+            borderRadius: '15px',
+            borderBottomLeftRadius: '25px 30px',
+            borderBottomRightRadius: '25px 30px'
+          }}>
+            <div style={{ width: 'fit-content', position: 'relative', backgroundColor: screenBackgroundColor, borderRadius: '3px' }}>
+              {props.children}
+            </div>
+            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', paddingTop: '10px' }}>
+              <span style={{ ...consoleNameStartStyle, ...consoleNameCommonStyle }}>GAME BOI</span>
+              <span>
+                <span style={{ color: 'rgb(223, 53, 115)', ...consoleNameEndStyle, ...consoleNameCommonStyle }}>  C</span>
+                <span style={{ color: 'rgb(99, 100, 244)', ...consoleNameEndStyle, ...consoleNameCommonStyle, fontSize: '1.5rem' }}>O</span>
+                <span style={{ color: 'rgb(152, 241, 75)', ...consoleNameEndStyle, ...consoleNameCommonStyle }}>L</span>
+                <span style={{ color: 'rgb(228, 219, 28)', ...consoleNameEndStyle, ...consoleNameCommonStyle, fontSize: '1.5rem' }}>O</span>
+                <span style={{ color: 'rgb(14, 185, 228)', ...consoleNameEndStyle, ...consoleNameCommonStyle }}>R</span>
+              </span>
+            </div>
           </div>
         </div>
-        <Stack direction='row' alignContent='center' justifyContent='space-around' gap='5px' sx={{ paddingTop: '25px' }}>
+        <div style={{ display: 'flex', justifyContent: 'center', padding: '10px 0px 0px 0px' }}>
+          <div style={{ border: `1px solid ${mainAccentColor}`, color: mainAccentColor, borderRadius: '10px', padding: '5px 10px 5px 10px' }}>Mintendo</div>
+        </div>
+        <Stack direction='row' alignContent='center' justifyContent='space-around' gap='5px'>
           {dpad}
-          {rightButtons}
+          {actionButtons}
         </Stack>
-        <Stack direction='row' alignContent='center' justifyContent='center' gap='5px' sx={{ paddingTop: '15px' }}>
+        <Stack direction='row' alignContent='center' justifyContent='center' gap='5px' sx={{ paddingTop: '55px' }}>
           <Stack direction='column' alignItems='center'>
-            <Button style={{ 
-              backgroundColor: 'green', 
-              height: '20px', 
-              border: '1px solid green',
+            <StyledButton sx={{ 
+              backgroundColor: buttonBgColor, 
+              height: '20px',
               width: '50px',
+              ...buttonDropShadow,
               borderRadius: '15px',
               padding: 0,
               margin: '0px 10px 0px 10px'
             }} onClick={handleMenuButton}/>
-            <Typography sx={{ color: 'green' }}>Menu</Typography>
+            <Typography sx={{ color: mainAccentColor }}>Menu</Typography>
           </Stack>
           <Stack direction='column' alignItems='center'>
-            <Button style={{ 
-              backgroundColor: 'green', 
-              height: '20px', 
-              border: '1px solid green',
+            <StyledButton sx={{ 
+              backgroundColor: buttonBgColor, 
+              height: '20px',
               width: '50px',
+              ...buttonDropShadow,
               borderRadius: '15px',
               padding: 0,
               margin: '0px 10px 0px 10px'
             }} onClick={handleStartButton}/>
-            <Typography sx={{ color: 'green' }}>Start</Typography>
+            <Typography sx={{ color: mainAccentColor }}>Start</Typography>
           </Stack>
         </Stack>
       </div>

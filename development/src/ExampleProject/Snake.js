@@ -20,8 +20,8 @@ const snakeText = `
 const SnakeTitle = () => <div style={{ fontFamily: 'monospace', whiteSpace: 'pre', lineHeight: '0.5' }}>{snakeText}</div>
 
 // GAME SPEEDS
-const gameRate = 1000 / 60 // 1/60s
-const baseGameSpeed = 1000
+const gameRate = 1000 / 60 // '60fps'
+const baseGameSpeed = 500
 const gameSpeeds = [
   {
     value: 1,
@@ -31,20 +31,15 @@ const gameSpeeds = [
   {
     value: 2,
     speed: 1,
-    label: ''
+    label: 'x1'
   },
   {
     value: 3,
-    speed: 1 / 2,
-    label: 'x2'
-  },
-  {
-    value: 4,
     speed: 1 / 3,
     label: 'x3'
   },
   {
-    value: 5,
+    value: 4,
     speed: 1 / 10,
     label: 'x10'
   }
@@ -119,7 +114,7 @@ export default function Snake () {
     gridArr[aRandomTile[0]][aRandomTile[1]] = 2
   }
 
-  const titleCheck = (gridArr, snake, newTile) => {
+  const tileCheck = (gridArr, snake, newTile) => {
     switch (newTile) {
     case 2:
       // eslint-disable-next-line no-case-declarations
@@ -183,7 +178,7 @@ export default function Snake () {
       newX = newX < 0 ? (width - 1) : newX
       newY = newY < 0 ? (height - 1) : newY
       _snake[0].now = [newX, newY]
-      titleCheck(_gridArr, _snake, _gridArr[newX][newY])
+      tileCheck(_gridArr, _snake, _gridArr[newX][newY])
       _gridArr[newX][newY] = 1
       
       snake.current = _snake
@@ -199,6 +194,9 @@ export default function Snake () {
   const timerClock = useRef(0)
 
   const handleStartGame = () => {
+    console.log(`cleared ${timerID.current}`)
+    clearInterval(timerID.current)
+    timerID.current = -1
     setGameOver(false)
     gridArr.current = createGridArr(width, height)
     direction.current = [0, 1] 
@@ -216,6 +214,9 @@ export default function Snake () {
     setGameOver(true)
   }
   const handleStartMainMenu = () => {
+    console.log(`cleared ${timerID.current}`)
+    clearInterval(timerID.current)
+    timerID.current = -1
     gridArr.current = createGridArr(width, height)
     setGrid(createGrid(gridArr.current))
     setStarted(false)
@@ -241,7 +242,7 @@ export default function Snake () {
     padding: '3px'
   }
 
-  const menuButtonFontStyle = { color: 'green', fontWeight: 'bolder' }
+  const menuButtonFontStyle = { color: theme.palette.primary.secondary, fontWeight: 'bolder' }
 
   const handleMenuButton = () => { 
     if (!gameOver && started) {
@@ -296,19 +297,19 @@ export default function Snake () {
           <Stack sx={ menuStyle } alignItems='center'>
             <SnakeTitle/><br/>
             <FormControl sx={{ display: 'flex', alignItems: 'center', paddingLeft: '5px' }}>
-              <FormLabel sx={{ color: 'black !important' }}>Portals</FormLabel>
+              <FormLabel sx={{ color: `${theme.palette.primary.secondary} !important` }}>Portals</FormLabel>
               <RadioGroup
                 row
                 name="radio-buttons-group-portal-selection"
                 value={portals}
                 onChange={handlePortalSelection}
               >
-                <FormControlLabel value="on" control={<Radio />} label="On" />
-                <FormControlLabel value="off" control={<Radio />} label="Off" />
+                <FormControlLabel value="on" control={<Radio sx={{ color: `${theme.palette.primary.secondary} !important` }} />} label="On" />
+                <FormControlLabel value="off" control={<Radio sx={{ color: `${theme.palette.primary.secondary} !important` }} />} label="Off" />
               </RadioGroup>
             </FormControl>
             <FormControl>
-              <FormLabel sx={{ color: 'black !important' }}>Game Speed</FormLabel>
+              <FormLabel sx={{ color: `${theme.palette.primary.secondary} !important` }}>Game Speed</FormLabel>
               <Slider 
                 value={speed} 
                 onChange={handleSpeedChange} 
@@ -317,6 +318,7 @@ export default function Snake () {
                 min={1}
                 max={gameSpeeds.length}
                 marks={gameSpeeds} 
+                sx={{ color: `${theme.palette.primary.secondary} !important` }} 
               />
             </FormControl>
             <Button onClick={handleStartGame} sx={menuButtonFontStyle}>Start</Button>
@@ -332,9 +334,12 @@ export default function Snake () {
         )}
         {/* PAUSE MENU */}
         {pausedState && (
-          <div style={ menuStyle }>
+          <Stack sx={ menuStyle } direction='column' alignItems='center' >
+            <SnakeTitle/><br/>
             <Typography>Paused</Typography>
-          </div>
+            <Button onClick={() => { handleMenuButton(); handleStartGame() }} sx={menuButtonFontStyle}>Restart</Button>
+            <Button onClick={() => { handleMenuButton(); handleStartMainMenu() }} sx={menuButtonFontStyle}>Exit to Menu</Button>
+          </Stack>
         )}
       </GameBoi>
     </>
