@@ -1,0 +1,28 @@
+[
+  {
+    "title": "Snake",
+    "body": "React Snake Game Clone: The classic arcade game with React's state management and responsive design for an engaging user experience",
+    "image": {
+      "imageURL": "snakegame.png",
+      "objectFit": "contain"
+    },
+    "view": {
+      "external": false,
+      "url": "/snake"
+    },
+    "code": {
+      "external": true,
+      "url": "https://github.com/MichaelMortlockChapman/MichaelMortlockChapman.github.io"
+    }
+  }, 
+  {
+    "title": "More to be added soon!",
+    "body": "",
+    "image": {
+      "imageURL": "https://i.gifer.com/7VVL.gif",
+      "objectFit": "fill"
+    },
+    "view": null,
+    "code": null
+  }
+]

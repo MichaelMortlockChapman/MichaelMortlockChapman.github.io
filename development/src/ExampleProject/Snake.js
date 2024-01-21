@@ -147,7 +147,6 @@ export default function Snake () {
   const [pausedState, setPausedState] = useState(false)
   const paused = useRef(false)
   const update = () => {
-    console.log('update')
     // using 'clock' as self-calling timeout was buggy so running update at 100ms and doing 'frame' when needed
     if (timerClock.current++ < (gameSpeeds[speed - 1].speed * baseGameSpeed) / gameRate) {
       return

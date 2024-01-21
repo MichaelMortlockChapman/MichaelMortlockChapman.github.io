@@ -112,15 +112,6 @@ export default function GameBoi (props) {
   const consoleNameStartStyle = { color: 'rgb(106, 167, 188)', fontStyle: 'italic', fontFamily: 'Impact' }
   const consoleNameEndStyle = { fontFamily: 'Comic Sans MS', letterSpacing: '-2px', fontWeight: 'bolder' }
 
-  // display warning 
-  const isSmallScreen = useMediaQuery({ maxWidth: '490px' })
-  useLayoutEffect(() => {
-    if (isSmallScreen) {
-      alert('Warning: this page was designed for screens larger than 490px, you may experience issues due to your smaller display.')
-    }
-    return () => {}
-  }, [])
-
   return (
     <Stack direction='row' justifyContent='center' alignContent='center' minWidth={'400px'}>  
       <div style={{
