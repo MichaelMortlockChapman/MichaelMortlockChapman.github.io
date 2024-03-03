@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-cp -TRv build/ ../
+cp -TRv build/ ../docs
 # <meta name="description" content="Web site created using create-react-app"/>
 var1='<meta name="description" content="Web site created using create-react-app"\/>'
 var2=''
