@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/abmsim/static/css/main.b6846147.css",
+    "main.js": "/abmsim/static/js/main.b3bc6641.js",
+    "index.html": "/index.html",
+    "main.b6846147.css.map": "/abmsim/static/css/main.b6846147.css.map",
+    "main.b3bc6641.js.map": "/abmsim/static/js/main.b3bc6641.js.map"
+  },
+  "entrypoints": [
+    "abmsim/static/css/main.b6846147.css",
+    "abmsim/static/js/main.b3bc6641.js"
+  ]
+}
