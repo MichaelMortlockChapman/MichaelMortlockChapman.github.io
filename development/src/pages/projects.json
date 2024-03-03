@@ -14,6 +14,22 @@
       "external": true,
       "url": "https://github.com/MichaelMortlockChapman/MichaelMortlockChapman.github.io/tree/main/development/src/ExampleProject"
     }
+  },
+  {
+    "title": "Agent-Based Model Simulation",
+    "body": "A basic agent-based model simulation project prototype for a one item market. The project contains simulation settings, three different agent types, and simulation data visualisation. ",
+    "image": {
+      "imageURL": "abmsim.png",
+      "objectFit": "contain"
+    },
+    "view": {
+      "external": true,
+      "url": "https://michaelmortlockchapman.github.io/abmsim"
+    },
+    "code": {
+      "external": true,
+      "url": "https://github.com/MichaelMortlockChapman/ABM-SIM"
+    }
   }, 
   {
     "title": "More to be added soon!",
