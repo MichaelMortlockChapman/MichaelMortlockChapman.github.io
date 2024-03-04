@@ -1,5 +1,15 @@
 [
   {
+    "title": "More to be added soon!",
+    "body": "",
+    "image": {
+      "imageURL": "https://i.gifer.com/7VVL.gif",
+      "objectFit": "fill"
+    },
+    "view": null,
+    "code": null
+  },
+  {
     "title": "Snake",
     "body": "React Snake Game Clone: The classic arcade game with React's state management and responsive design for an engaging user experience",
     "image": {
@@ -30,15 +40,5 @@
       "external": true,
       "url": "https://github.com/MichaelMortlockChapman/ABM-SIM"
     }
-  }, 
-  {
-    "title": "More to be added soon!",
-    "body": "",
-    "image": {
-      "imageURL": "https://i.gifer.com/7VVL.gif",
-      "objectFit": "fill"
-    },
-    "view": null,
-    "code": null
   }
 ]

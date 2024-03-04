@@ -78,7 +78,7 @@ export default function ProjectsPage () {
   return (
     <>
       <Grid style={{ margin: '20px', justifyContent: 'center' }} container spacing={2}>
-        {projectData.map((val, i) => <Grid key={i} xs="auto" ><ProjectCard
+        {[...projectData].reverse().map((val, i) => <Grid key={i} xs="auto" ><ProjectCard
           title={val.title} 
           body={val.body} 
           imageSrc={val.image.imageURL[0] === 'h' ? val.image.imageURL : `/projectImgs/${val.image.imageURL}`}
