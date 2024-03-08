@@ -113,7 +113,7 @@ export default function Frontpage () {
                 Hi, I&apos;m <span style={{ fontWeight: 'bold', color: theme.palette.primary.complementary }}>Michael</span>.
               </Typography>
               <Typography sx={{ padding: theme.style.itemPadding }} variant='body1'>
-                I am a highly motivated recent Bachelor of Computer Science graduate. 
+              I am a highly motivated recent graduate of computer science.
                 My major is in artificial intelligence with a minor in information systems. 
                 My passion is to develop and maintain excellent software and to further my skills 
                 and knowledge in the industry. I am hard working, collegiate and eager to find a 
