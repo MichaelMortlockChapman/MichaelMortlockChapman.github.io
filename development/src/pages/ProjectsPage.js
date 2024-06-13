@@ -81,7 +81,7 @@ export default function ProjectsPage () {
         {[...projectData].reverse().map((val, i) => <Grid key={i} xs="auto" ><ProjectCard
           title={val.title} 
           body={val.body} 
-          imageSrc={val.image.imageURL[0] === 'h' ? val.image.imageURL : `/projectImgs/${val.image.imageURL}`}
+          imageSrc={val.image.imageURL.includes('https://') ? val.image.imageURL : `/projectImgs/${val.image.imageURL}`}
           imageStyle={val.image.objectFit}
           onClickView={val.view ? createOnClickFunc(val.view.external, val.view.url) : undefined}
           onClickSource={val.code ? createOnClickFunc(val.code.external, val.code.url) : undefined}

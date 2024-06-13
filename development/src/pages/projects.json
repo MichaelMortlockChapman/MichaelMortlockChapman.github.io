@@ -40,5 +40,33 @@
       "external": true,
       "url": "https://github.com/MichaelMortlockChapman/ABM-SIM"
     }
+  },
+  {
+    "title": "Helldivers 2 Randomiser",
+    "body": "A Helldivers 2 equipment randomiser with settings for rolls. The application was built with react and mui. The randomiser includes all the stratagems, boosters, weapons, grenades, and armour perks from the game. It includes two settings, simples and complex. The simple setting allows ‘content packages’ to be picked, allowing for quicker setup. While the complex setting grants the choice to toggle all content either on or off. The randomiser also includes ‘randomness logic’ for fine control over the desired outcome.",
+    "image": {
+      "imageURL": "hd2randomiser.png",
+      "objectFit": "contain"
+    },
+    "view": {
+      "external": true,
+      "url": "https://brechidan.github.io/HD2Randomiser/"
+    },
+    "code": {
+      "external": true,
+      "url": "https://github.com/Brechidan/HD2Randomiser"
+    }
+  },
+  {
+    "title": "Simple Online Store",
+    "body": "This project was built to develop and showcase my skills with the Spring framework. The web service created utilises Spring Boot & a PostgreSQL database to comprise the RESTful API backend of a fictional online store. The service provides logic for authentication, authorization, customer details, product information, and ordering.",
+    "image": {
+      "imageURL": "simpleOnlineStore thumbnail.png",
+      "objectFit": "contain"
+    },
+    "code": {
+      "external": true,
+      "url": "https://github.com/MichaelMortlockChapman/SimpleOnlineStore"
+    }
   }
 ]
