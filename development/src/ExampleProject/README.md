@@ -1,1 +1,0 @@
-## Example Project (Simple Snake Game)
