@@ -1,127 +1,71 @@
-import { Environment, Html, PerspectiveCamera, Scroll, ScrollControls, useScroll } from '@react-three/drei'
-import { Canvas, useFrame } from '@react-three/fiber'
-import { useEffect, useRef } from 'react'
-import * as THREE from 'three'
+import { Box, ContactShadows, Environment, OrbitControls, Plane, Scroll, ScrollControls } from '@react-three/drei'
+import { Canvas } from '@react-three/fiber'
+import Sandwich from '../components/Sandwich'
+import { Suspense } from 'react'
 
-import GetParts from '../components/GetParts.jsx'
+function Test() {
+  return <div style={{ backgroundColor: 'white', width: '520px', padding: '20px' }}>
+  <h1>TEST 1</h1>
+  <p style={{ fontSize: '2rem' }}>
+  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Volutpat consequat mauris nunc congue nisi vitae. Sagittis vitae et leo duis ut diam quam nulla. Consequat nisl vel pretium lectus quam id leo in. Nunc sed augue lacus viverra vitae congue. Non blandit massa enim nec dui nunc mattis. Mi eget mauris pharetra et ultrices neque ornare. Orci eu lobortis elementum nibh. Mauris cursus mattis molestie a iaculis. Augue lacus viverra vitae congue eu consequat ac felis. Diam in arcu cursus euismod. Lectus urna duis convallis convallis tellus id interdum velit. In nulla posuere sollicitudin aliquam ultrices sagittis orci a. Ante metus dictum at tempor commodo ullamcorper. Habitant morbi tristique senectus et netus et malesuada. Urna condimentum mattis pellentesque id. Aliquet enim tortor at auctor. Pellentesque elit ullamcorper dignissim cras tincidunt. Porttitor massa id neque aliquam. A arcu cursus vitae congue mauris.
 
-/*
-"Sandwich assembly" (https://skfb.ly/ozG7Q) by Harry Charalambous is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).
-*/
+  Enim sit amet venenatis urna cursus eget nunc. Ut etiam sit amet nisl purus in mollis. Mauris pellentesque pulvinar pellentesque habitant morbi tristique. Mauris vitae ultricies leo integer malesuada nunc vel risus commodo. Viverra suspendisse potenti nullam ac tortor vitae purus. Tortor consequat id porta nibh venenatis cras sed. Elementum facilisis leo vel fringilla. Eget gravida cum sociis natoque penatibus et magnis dis. Malesuada bibendum arcu vitae elementum. Nisi lacus sed viverra tellus. Quis vel eros donec ac odio tempor. Tellus rutrum tellus pellentesque eu tincidunt tortor aliquam nulla. Tempor id eu nisl nunc mi ipsum faucibus vitae aliquet. Mollis nunc sed id semper risus in hendrerit. Rhoncus urna neque viverra justo nec ultrices. Aenean pharetra magna ac placerat vestibulum. Aliquet bibendum enim facilisis gravida neque. Tortor pretium viverra suspendisse potenti nullam.
 
-function MakeSandwich(segments) {
-  const items = GetParts()
-  const sandwich = []
+  Neque gravida in fermentum et sollicitudin. Massa sapien faucibus et molestie ac feugiat. Luctus accumsan tortor posuere ac ut consequat semper viverra nam. Nam libero justo laoreet sit amet cursus sit amet dictum. Vehicula ipsum a arcu cursus vitae congue mauris rhoncus. Aliquam eleifend mi in nulla. Nisi scelerisque eu ultrices vitae auctor. Suspendisse sed nisi lacus sed viverra tellus. Suspendisse potenti nullam ac tortor vitae purus faucibus ornare. Sit amet porttitor eget dolor morbi non. Massa massa ultricies mi quis hendrerit dolor magna eget est. Nam libero justo laoreet sit amet cursus sit. Odio morbi quis commodo odio aenean. Congue quisque egestas diam in arcu cursus euismod.
 
-  const offset = 1.05;
-  let count = 0;
-  const addPart = (part) => {
-    sandwich.push(
-      <group key={count}>
-        {part}
-      </group>
-    )
-    count++
-  }
-  const itemNames = Object.keys(items)
-  const getRandomPart = () => items[itemNames[Math.floor(Math.random() * itemNames.length)]]
-  
-  addPart(items.Bread)
-  for (let i = 0; i < segments; i++) {
-    addPart(getRandomPart())
-    addPart(getRandomPart())
-  }
-  addPart(items.Bread)
+  Cursus mattis molestie a iaculis. Vehicula ipsum a arcu cursus vitae congue mauris. Purus in mollis nunc sed id semper. Eget mi proin sed libero. Sollicitudin aliquam ultrices sagittis orci a scelerisque purus. Mauris pellentesque pulvinar pellentesque habitant morbi. Eget arcu dictum varius duis at consectetur lorem donec massa. Semper viverra nam libero justo. Sed pulvinar proin gravida hendrerit lectus a. Varius sit amet mattis vulputate enim nulla.
 
-  return sandwich
-}
+  In nibh mauris cursus mattis molestie. At risus viverra adipiscing at in tellus integer feugiat. Parturient montes nascetur ridiculus mus mauris. Amet purus gravida quis blandit turpis cursus in hac habitasse. Viverra aliquet eget sit amet tellus. Massa enim nec dui nunc mattis enim ut tellus elementum. Enim ut sem viverra aliquet eget sit amet tellus. Vestibulum mattis ullamcorper velit sed ullamcorper. Dolor sit amet consectetur adipiscing. Dolor sed viverra ipsum nunc aliquet. Donec massa sapien faucibus et molestie ac feugiat. Varius duis at consectetur lorem donec massa sapien faucibus. Dolor sit amet consectetur adipiscing elit duis tristique sollicitudin nibh. Sit amet tellus cras adipiscing enim eu turpis egestas. Feugiat pretium nibh ipsum consequat.
 
-function SandwichAnimTest(props) {
-  const textRef = useRef(false)
-  const cameraRef = useRef(false)
-  const partsRef = useRef([]);
-  useEffect(() => {
-    partsRef.current = partsRef.current.slice(0, props.sandwich.length)
-  }, [props.sandwich])
-  
-  const scroll = useScroll();
+  Cum sociis natoque penatibus et magnis dis. Tempor orci eu lobortis elementum nibh tellus molestie nunc non. Amet mattis vulputate enim nulla aliquet porttitor lacus luctus. Libero volutpat sed cras ornare arcu dui vivamus. Pellentesque adipiscing commodo elit at imperdiet dui. Nunc congue nisi vitae suscipit tellus mauris. Vulputate sapien nec sagittis aliquam malesuada bibendum arcu vitae elementum. Tempor orci eu lobortis elementum nibh. Quam lacus suspendisse faucibus interdum. Nunc eget lorem dolor sed. Blandit aliquam etiam erat velit scelerisque in dictum. Curabitur vitae nunc sed velit dignissim sodales. A pellentesque sit amet porttitor eget dolor morbi. Aenean vel elit scelerisque mauris pellentesque pulvinar pellentesque. Malesuada proin libero nunc consequat. Quam nulla porttitor massa id. Ut sem nulla pharetra diam sit amet nisl suscipit adipiscing. Fames ac turpis egestas maecenas pharetra convallis.
 
-  //amount of parts/items between each segment
-  const partsGap = 2;
-  // offset consts
-  const offset = 1.04;
-  const animOffset = 0.9;
-  const gap = 14
-  // peak of the sin wave
-  const cameraSinMovement = 2
+  Faucibus purus in massa tempor nec. Sit amet consectetur adipiscing elit pellentesque habitant morbi tristique senectus. Fringilla est ullamcorper eget nulla facilisi etiam. Neque convallis a cras semper auctor neque vitae tempus quam. Eu consequat ac felis donec et odio pellentesque. Quisque sagittis purus sit amet volutpat consequat. Urna nunc id cursus metus aliquam. Consectetur lorem donec massa sapien faucibus et molestie. Malesuada fames ac turpis egestas integer eget aliquet. Nec nam aliquam sem et tortor. Sed lectus vestibulum mattis ullamcorper velit sed ullamcorper morbi tincidunt. Eu volutpat odio facilisis mauris sit amet massa vitae tortor. Eget nunc scelerisque viverra mauris in aliquam sem fringilla. Sagittis nisl rhoncus mattis rhoncus urna neque viverra justo nec. Tortor dignissim convallis aenean et. Posuere urna nec tincidunt praesent semper feugiat nibh.
 
-  const numPages = Math.floor((props.sandwich.length - 2) / 2)
+  Natoque penatibus et magnis dis. Semper feugiat nibh sed pulvinar proin gravida hendrerit lectus. Tincidunt lobortis feugiat vivamus at augue eget arcu dictum varius. Quis auctor elit sed vulputate mi sit amet. Arcu dui vivamus arcu felis bibendum ut tristique et egestas. Scelerisque viverra mauris in aliquam. In massa tempor nec feugiat nisl pretium fusce id velit. Ac turpis egestas maecenas pharetra convallis posuere morbi. Purus in mollis nunc sed. Eget mauris pharetra et ultrices neque. Faucibus interdum posuere lorem ipsum dolor sit amet consectetur. Nulla pharetra diam sit amet nisl suscipit adipiscing. Vel quam elementum pulvinar etiam non. Volutpat diam ut venenatis tellus. Sit amet est placerat in egestas.
 
-  useFrame(({clock}) => {
-    // scroll wheel split into 1 / numPages parts 
-    const page = Math.floor(scroll.offset / (1/numPages))
-    const scrollPos = scroll.curve(page / numPages, 1 / numPages)
-    const partIndex = props.sandwich.length - ((1 + partsGap) + page * partsGap)
+  Viverra suspendisse potenti nullam ac. A scelerisque purus semper eget duis at. Id cursus metus aliquam eleifend mi. Et leo duis ut diam quam nulla porttitor massa id. Vitae elementum curabitur vitae nunc sed velit dignissim sodales. Lobortis elementum nibh tellus molestie nunc non blandit. Et molestie ac feugiat sed lectus vestibulum. Nulla malesuada pellentesque elit eget gravida cum sociis. Sit amet massa vitae tortor condimentum lacinia. Cursus vitae congue mauris rhoncus aenean vel elit scelerisque mauris. Ipsum a arcu cursus vitae. Sed risus pretium quam vulputate dignissim suspendisse. Tellus integer feugiat scelerisque varius morbi. Quis auctor elit sed vulputate mi sit amet mauris commodo. Id donec ultrices tincidunt arcu. Tristique senectus et netus et.
 
-    for (let i = 0; i < partsRef.current.length; i++) {
-      // create a 'gap' between each segment using the scroll curve, moving smoothly between 'gaps'
-      //  also add a sin moment ot the x axis
-      const startingOffset = offset * i 
-      const scrollOffset = animOffset * gap * scrollPos
-      const scrollOffsetModify = (i >= partIndex ? 1 : -1)
+  Donec pretium vulputate sapien nec sagittis aliquam malesuada bibendum. Lectus proin nibh nisl condimentum id venenatis a. Lectus quam id leo in. Dolor sit amet consectetur adipiscing elit duis tristique sollicitudin. Aliquam faucibus purus in massa tempor nec feugiat. Sem nulla pharetra diam sit amet nisl suscipit. Odio euismod lacinia at quis risus sed. Aenean vel elit scelerisque mauris pellentesque. Suspendisse interdum consectetur libero id faucibus. Amet facilisis magna etiam tempor orci eu lobortis. Non arcu risus quis varius quam. Ornare lectus sit amet est placerat in. Tristique senectus et netus et malesuada fames ac. Ut etiam sit amet nisl purus in. Gravida rutrum quisque non tellus orci. Lacus luctus accumsan tortor posuere ac ut. Urna id volutpat lacus laoreet non.
+  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Volutpat consequat mauris nunc congue nisi vitae. Sagittis vitae et leo duis ut diam quam nulla. Consequat nisl vel pretium lectus quam id leo in. Nunc sed augue lacus viverra vitae congue. Non blandit massa enim nec dui nunc mattis. Mi eget mauris pharetra et ultrices neque ornare. Orci eu lobortis elementum nibh. Mauris cursus mattis molestie a iaculis. Augue lacus viverra vitae congue eu consequat ac felis. Diam in arcu cursus euismod. Lectus urna duis convallis convallis tellus id interdum velit. In nulla posuere sollicitudin aliquam ultrices sagittis orci a. Ante metus dictum at tempor commodo ullamcorper. Habitant morbi tristique senectus et netus et malesuada. Urna condimentum mattis pellentesque id. Aliquet enim tortor at auctor. Pellentesque elit ullamcorper dignissim cras tincidunt. Porttitor massa id neque aliquam. A arcu cursus vitae congue mauris.
 
-      partsRef.current[i].position.y = startingOffset + scrollOffset * scrollOffsetModify
-      partsRef.current[i].position.x = Math.sin(clock.getElapsedTime() + Math.PI/8 * i)
-    }
-    // i want the camera to position itself at the bottom on start of scroll and bottom at the end
-    //  then otherwise position camera in 'gaps', moving along with the scroll curve. Also add a bit of sin movement
-    const partIndexClamp = Math.max(partIndex, 1)
-    const top = partsRef.current[props.sandwich.length - 1].position.y;
-    const x = top - (offset * (props.sandwich.length - partIndexClamp)) - animOffset * gap * scrollPos + cameraSinMovement * Math.sin(clock.getElapsedTime())
-    cameraRef.current.position.y = x
-  })
-  console.log('hi');
+  Enim sit amet venenatis urna cursus eget nunc. Ut etiam sit amet nisl purus in mollis. Mauris pellentesque pulvinar pellentesque habitant morbi tristique. Mauris vitae ultricies leo integer malesuada nunc vel risus commodo. Viverra suspendisse potenti nullam ac tortor vitae purus. Tortor consequat id porta nibh venenatis cras sed. Elementum facilisis leo vel fringilla. Eget gravida cum sociis natoque penatibus et magnis dis. Malesuada bibendum arcu vitae elementum. Nisi lacus sed viverra tellus. Quis vel eros donec ac odio tempor. Tellus rutrum tellus pellentesque eu tincidunt tortor aliquam nulla. Tempor id eu nisl nunc mi ipsum faucibus vitae aliquet. Mollis nunc sed id semper risus in hendrerit. Rhoncus urna neque viverra justo nec ultrices. Aenean pharetra magna ac placerat vestibulum. Aliquet bibendum enim facilisis gravida neque. Tortor pretium viverra suspendisse potenti nullam.
 
-  return (
-    <>
-      <group ref={cameraRef} position={[0,10,60]} scale={[15,15,15]} rotation={[0, 0,0]}>
-        <PerspectiveCamera makeDefault/>
-      </group>
-      <Html ref={textRef}>
-        <h1>WORLD!!!!!</h1>
-      </Html>
-      <group>
-        {props.sandwich.map((part, index) => 
-          <group 
-            key={index}
-            position={[0, offset * index, 0]}
-            ref={el => partsRef.current[index] = el}
-          >
-            {part}
-          </group>
-        )}
-      </group>
-    </>
-  )
+  Neque gravida in fermentum et sollicitudin. Massa sapien faucibus et molestie ac feugiat. Luctus accumsan tortor posuere ac ut consequat semper viverra nam. Nam libero justo laoreet sit amet cursus sit amet dictum. Vehicula ipsum a arcu cursus vitae congue mauris rhoncus. Aliquam eleifend mi in nulla. Nisi scelerisque eu ultrices vitae auctor. Suspendisse sed nisi lacus sed viverra tellus. Suspendisse potenti nullam ac tortor vitae purus faucibus ornare. Sit amet porttitor eget dolor morbi non. Massa massa ultricies mi quis hendrerit dolor magna eget est. Nam libero justo laoreet sit amet cursus sit. Odio morbi quis commodo odio aenean. Congue quisque egestas diam in arcu cursus euismod.
+
+  Cursus mattis molestie a iaculis. Vehicula ipsum a arcu cursus vitae congue mauris. Purus in mollis nunc sed id semper. Eget mi proin sed libero. Sollicitudin aliquam ultrices sagittis orci a scelerisque purus. Mauris pellentesque pulvinar pellentesque habitant morbi. Eget arcu dictum varius duis at consectetur lorem donec massa. Semper viverra nam libero justo. Sed pulvinar proin gravida hendrerit lectus a. Varius sit amet mattis vulputate enim nulla.
+
+  In nibh mauris cursus mattis molestie. At risus viverra adipiscing at in tellus integer feugiat. Parturient montes nascetur ridiculus mus mauris. Amet purus gravida quis blandit turpis cursus in hac habitasse. Viverra aliquet eget sit amet tellus. Massa enim nec dui nunc mattis enim ut tellus elementum. Enim ut sem viverra aliquet eget sit amet tellus. Vestibulum mattis ullamcorper velit sed ullamcorper. Dolor sit amet consectetur adipiscing. Dolor sed viverra ipsum nunc aliquet. Donec massa sapien faucibus et molestie ac feugiat. Varius duis at consectetur lorem donec massa sapien faucibus. Dolor sit amet consectetur adipiscing elit duis tristique sollicitudin nibh. Sit amet tellus cras adipiscing enim eu turpis egestas. Feugiat pretium nibh ipsum consequat.
+
+  Cum sociis natoque penatibus et magnis dis. Tempor orci eu lobortis elementum nibh tellus molestie nunc non. Amet mattis vulputate enim nulla aliquet porttitor lacus luctus. Libero volutpat sed cras ornare arcu dui vivamus. Pellentesque adipiscing commodo elit at imperdiet dui. Nunc congue nisi vitae suscipit tellus mauris. Vulputate sapien nec sagittis aliquam malesuada bibendum arcu vitae elementum. Tempor orci eu lobortis elementum nibh. Quam lacus suspendisse faucibus interdum. Nunc eget lorem dolor sed. Blandit aliquam etiam erat velit scelerisque in dictum. Curabitur vitae nunc sed velit dignissim sodales. A pellentesque sit amet porttitor eget dolor morbi. Aenean vel elit scelerisque mauris pellentesque pulvinar pellentesque. Malesuada proin libero nunc consequat. Quam nulla porttitor massa id. Ut sem nulla pharetra diam sit amet nisl suscipit adipiscing. Fames ac turpis egestas maecenas pharetra convallis.
+
+  Faucibus purus in massa tempor nec. Sit amet consectetur adipiscing elit pellentesque habitant morbi tristique senectus. Fringilla est ullamcorper eget nulla facilisi etiam. Neque convallis a cras semper auctor neque vitae tempus quam. Eu consequat ac felis donec et odio pellentesque. Quisque sagittis purus sit amet volutpat consequat. Urna nunc id cursus metus aliquam. Consectetur lorem donec massa sapien faucibus et molestie. Malesuada fames ac turpis egestas integer eget aliquet. Nec nam aliquam sem et tortor. Sed lectus vestibulum mattis ullamcorper velit sed ullamcorper morbi tincidunt. Eu volutpat odio facilisis mauris sit amet massa vitae tortor. Eget nunc scelerisque viverra mauris in aliquam sem fringilla. Sagittis nisl rhoncus mattis rhoncus urna neque viverra justo nec. Tortor dignissim convallis aenean et. Posuere urna nec tincidunt praesent semper feugiat nibh.
+
+  Natoque penatibus et magnis dis. Semper feugiat nibh sed pulvinar proin gravida hendrerit lectus. Tincidunt lobortis feugiat vivamus at augue eget arcu dictum varius. Quis auctor elit sed vulputate mi sit amet. Arcu dui vivamus arcu felis bibendum ut tristique et egestas. Scelerisque viverra mauris in aliquam. In massa tempor nec feugiat nisl pretium fusce id velit. Ac turpis egestas maecenas pharetra convallis posuere morbi. Purus in mollis nunc sed. Eget mauris pharetra et ultrices neque. Faucibus interdum posuere lorem ipsum dolor sit amet consectetur. Nulla pharetra diam sit amet nisl suscipit adipiscing. Vel quam elementum pulvinar etiam non. Volutpat diam ut venenatis tellus. Sit amet est placerat in egestas.
+
+  Viverra suspendisse potenti nullam ac. A scelerisque purus semper eget duis at. Id cursus metus aliquam eleifend mi. Et leo duis ut diam quam nulla porttitor massa id. Vitae elementum curabitur vitae nunc sed velit dignissim sodales. Lobortis elementum nibh tellus molestie nunc non blandit. Et molestie ac feugiat sed lectus vestibulum. Nulla malesuada pellentesque elit eget gravida cum sociis. Sit amet massa vitae tortor condimentum lacinia. Cursus vitae congue mauris rhoncus aenean vel elit scelerisque mauris. Ipsum a arcu cursus vitae. Sed risus pretium quam vulputate dignissim suspendisse. Tellus integer feugiat scelerisque varius morbi. Quis auctor elit sed vulputate mi sit amet mauris commodo. Id donec ultrices tincidunt arcu. Tristique senectus et netus et.
+
+  Donec pretium vulputate sapien nec sagittis aliquam malesuada bibendum. Lectus proin nibh nisl condimentum id venenatis a. Lectus quam id leo in. Dolor sit amet consectetur adipiscing elit duis tristique sollicitudin. Aliquam faucibus purus in massa tempor nec feugiat. Sem nulla pharetra diam sit amet nisl suscipit. Odio euismod lacinia at quis risus sed. Aenean vel elit scelerisque mauris pellentesque. Suspendisse interdum consectetur libero id faucibus. Amet facilisis magna etiam tempor orci eu lobortis. Non arcu risus quis varius quam. Ornare lectus sit amet est placerat in. Tristique senectus et netus et malesuada fames ac. Ut etiam sit amet nisl purus in. Gravida rutrum quisque non tellus orci. Lacus luctus accumsan tortor posuere ac ut. Urna id volutpat lacus laoreet non.
+  </p>
+</div>
 }
 
 export default function ThreeFrontPage () {
-  const items = GetParts()
-  const sandwich = MakeSandwich(12)
   return (
-    <div style={{ height: '100vh' }}>
-      <Canvas dpr={2}>
-        <Environment preset="sunset" background/>
-        {/* <OrbitControls/> */}
-        <ScrollControls pages={1} damping={0.1}>
-          <Scroll style={{ width: '100%' }}>
-            <SandwichAnimTest sandwich={sandwich}/>
-          </Scroll>
-        </ScrollControls>
-      </Canvas>
-      <div style={{ position: 'absolute', top: '0px' }}>
-        <h1>HELLO!!!!</h1>
-      </div>
+    <div style={{ height: '100vh', background: '#2d4967' }}>
+      <Suspense fallback={null}>
+        <Canvas dpr={[1,2]} shadows gl={{antialias: true}}>
+          <ScrollControls pages={2} damping={0.1}>
+            <Scroll style={{ width: '100%' }}>
+              <Sandwich>
+                <Test/>
+                <Test/>
+                <Test/>
+                <Test/>
+              </Sandwich>
+            </Scroll>
+          </ScrollControls>
+        </Canvas>
+      </Suspense>
     </div>
   )
 }

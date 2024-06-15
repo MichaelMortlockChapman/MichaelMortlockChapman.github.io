@@ -1,8 +1,14 @@
 import { useGLTF } from '@react-three/drei'
 import React, { useRef } from 'react'
+import { MeshStandardMaterial } from 'three';
 
+const GLTF_ITEMS = {curret : null};
 export default function GetParts () {
   const { nodes, materials } = useGLTF('/scene.glb')
+
+  if (GLTF_ITEMS.curret !== null) {
+    return GLTF_ITEMS.curret
+  }
 
   const items = {
     "Egg": <mesh
@@ -210,5 +216,7 @@ export default function GetParts () {
           material={materials.Qiiwi}
         />
     }
+    GLTF_ITEMS.curret = items
+
     return items;
 }
