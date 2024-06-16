@@ -1,8 +1,28 @@
-import { Float, PerspectiveCamera, useScroll } from '@react-three/drei'
+import { Typography } from '@mui/material';
+import { Html, useScroll } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
 import { useEffect, useRef, useState } from 'react'
 import { MathUtils } from 'three';
 import * as THREE from 'three'
+
+function IntroText() {
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', }}>
+      <div style={{ backgroundColor: 'white', padding: '10px 30px', borderRadius: '50px', marginBottom: '5px' }}>
+        <Typography variant='h4' textAlign={'center'}>
+          <div>Welcome to</div>
+          <div>Michael Mortlock-Chapman's</div>
+          <div>Portfolio Site</div>
+        </Typography>
+      </div>
+      <div style={{ backgroundColor: 'white', width: 'max-content', padding: '10px 30px', borderRadius: '50px' }}>
+        <Typography variant='h5'>SCROLL - Page navigation</Typography>
+        <Typography variant='h5'>CLICK & DRAG (PC Only) - 3D sandwich movement</Typography>
+        <Typography variant='h5'>ESC (PC Only) - Skip intro</Typography>
+      </div>
+    </div>
+  )
+}
 
 //amount of parts/items between each segment
 const partsGap = 3;
@@ -18,21 +38,33 @@ export default function SandwichAnimTest(props) {
   const numPages = Math.floor((numParts - 2) / 3)
 
   const page = useRef(0)
-  useEffect(() => {
-    props.setVisable(numPages - 1 - page.current)
-  }, [])
-  const updateOnDiff = (currentPage) => {
-    if (page.current !== currentPage) {
-      props.setVisable(currentPage)
-      page.current = currentPage
-    }
-  }
-
   const partsRef = useRef([]);
   const scroll = useScroll();
 
   const curve = useRef(new THREE.QuadraticBezierCurve3(new THREE.Vector3(0,70,0), new THREE.Vector3(0, (70 + 10 + 40) / 2, (0 + 60 + 40) / 2), new THREE.Vector3(0,10,60)))
   const point3 = useRef(new THREE.Vector3())
+  
+  const [introAnimEnd, setIntroAnimEnd] = useState(false)
+  const skipIntroAnim = () => {
+    setIntroAnimEnd(true)
+    props.cameraRef.current.position.x = 0
+    props.cameraRef.current.position.z = 60
+    props.cameraRef.current.rotation.x = 0
+  }
+  const [hideIntroHtml, setHideIntroHtml] = useState(false)
+  const introHtmlGroup = useRef(null)
+
+  useEffect(() => {
+    props.setVisable(numPages - 1 - page.current)
+    window.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && !introAnimEnd) {
+        skipIntroAnim()
+      }
+    })
+    return () => {
+      window.removeEventListener('keydown')
+    }
+  }, [])
 
   useFrame(({clock}) => {
     // ###########
@@ -44,10 +76,14 @@ export default function SandwichAnimTest(props) {
     const scrollPos = scroll.curve(currentPage / numPages, 1 / numPages)
     const partIndex = numParts - ((1 + partsGap) + currentPage * partsGap)
     
-    if (scrollPos > 0.75) {
-      updateOnDiff(numPages - 1 - currentPage)
+    if (scrollPos > 0.7) {
+      props.setVisable(numPages - 1 - currentPage, scrollPos)
+      props.setOpacity(scrollPos)
+      page.current = numPages - 1 - currentPage, scrollPos
     } else {
-      updateOnDiff(-1)
+      props.setVisable(-1)
+      props.setOpacity(0)
+      page.current = -1
     }
 
     for (let i = 0; i < partsRef.current.length; i++) {
@@ -69,26 +105,51 @@ export default function SandwichAnimTest(props) {
     // i want the camera to position itself at the bottom on start of scroll and bottom at the end
     //  then otherwise position camera in 'gaps', moving along with the scroll curve. Also add a bit of sin movement
     const partIndexClamp = Math.max(partIndex, 3)
-    const top = partsRef.current[numParts - 1].position.y;
-    const cameraPosY = top - (offset * (numParts - partIndexClamp)) - animOffset * gap * scrollPos + cameraSinMovement * Math.sin(clock.getElapsedTime())
+    // const top = partsRef.current[numParts - 1].position.y;
+    // const cameraPosY = top - (offset * (numParts - partIndexClamp)) - animOffset * gap * scrollPos + cameraSinMovement * Math.sin(clock.getElapsedTime())
+    const cameraPosY = partsRef.current[partIndexClamp].position.y + cameraSinMovement * Math.sin(clock.getElapsedTime())
     props.cameraRef.current.position.y = cameraPosY
+
+    // ###########
+    // intro text position & hiding
+    // ###########
+    introHtmlGroup.current.position.x = 0.4 * Math.sin(clock.getElapsedTime() + (Math.PI/32) * props.children.length)
+    introHtmlGroup.current.position.y = partsRef.current[numParts - 1].position.y + 1
+    setHideIntroHtml(scroll.offset !== 0)
 
     // ###########
     // intro animation
     // ###########
-    if (clock.getElapsedTime() > 5) {
+    if (introAnimEnd) {
+      return;
+    }
+
+    const animationDuration = 5
+    if (clock.getElapsedTime() > animationDuration) {
+      skipIntroAnim()
       return;
     }
     curve.current.v2.set(0,cameraPosY,60) // update new end point to current float y of camera
-    const u = Math.pow(Math.min(clock.getElapsedTime() / 5, 1), 4)
+    const u = Math.pow(Math.min(clock.getElapsedTime() / animationDuration, 1), 4)
     curve.current.getPointAt(u, point3.current)
     props.cameraRef.current.position.y = point3.current.y
     props.cameraRef.current.position.x = point3.current.x
     props.cameraRef.current.position.z = point3.current.z
     props.cameraRef.current.rotation.x = MathUtils.lerp(-Math.PI/2, 0, u)
+
   })
   
   return <>
+    <group ref={introHtmlGroup}>
+      <Html
+        transform 
+        occlude="raycast"
+        style={{ opacity: hideIntroHtml ? 0 : 1 }}
+        rotation={[-Math.PI/2, 0, 0]}
+      >
+        <IntroText/>
+      </Html>
+    </group>
     {props.children.map((child, index) => {
       return <group 
         receiveShadow castShadow

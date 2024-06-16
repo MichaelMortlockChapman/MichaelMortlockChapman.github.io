@@ -1,10 +1,10 @@
 import { Html, PerspectiveCamera, PresentationControls, QuadraticBezierLine, useHelper } from '@react-three/drei'
 import { useThree } from '@react-three/fiber'
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import { CameraHelper } from 'three'
 
 import GetParts from '../components/GetParts.jsx'
 import SandwichAnimController from '../components/SandwichAnimController.jsx'
-import { CameraHelper } from 'three'
 
 /*
 "Sandwich assembly" (https://skfb.ly/ozG7Q) by Harry Charalambous is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).
@@ -17,27 +17,25 @@ import { CameraHelper } from 'three'
   at least mitigated by scaling down the Html parent and scaling up the html children"
   - from Drei README
 */
-
-function HTMLcomponent(props) {
-  const { parentNode, visible } = props
+function HTMLcomponent({ parentNode, visible, divOpacity, children }) {
   return (
     <group>
       <Html 
         // transform
         portal={{ current: parentNode }}
         occlude//="blending"
-        style={{ display: visible ? 'block' : 'none', transform: 'translate(-50%, -50%)' }}
+        style={{ display: visible? 'block' : 'none', transform: 'translate(-50%, -50%)', opacity: divOpacity }}
         visible={visible}
       >
-        <div>
-          {props.children}
-        </div>
+        {children}
       </Html>
     </group>
   )
 }
 
 function Sandwich(props) {
+  // can't have a sandwich without any items, also logic stuffs up when children zero
+  //  kinda already using a hack with getChildren and what happens in the SandwichAnimController map
   if (props.children === undefined) {
     return <></>
   }
@@ -52,49 +50,63 @@ function Sandwich(props) {
   const get = useThree((state) => state.get);
   const parentNode = get().gl.domElement.parentNode
   
-  const children = getChildren()
-  const numOfChildren = children.length
-  const items = GetParts()
-  const itemNames = Object.keys(items)
-  const getRandomPart = () => items[itemNames[Math.floor(Math.random() * itemNames.length)]]
+  const children = useRef(getChildren().reverse())
+  const items = useRef(GetParts())
+  const numOfChildren = children.current.length
+  const itemNames = Object.keys(items.current)
+  const getRandomPart = () => items.current[itemNames[Math.floor(Math.random() * itemNames.length)]]
   const parts = useRef(Array(numOfChildren + 1).fill(0).map((el, i) => [getRandomPart(), getRandomPart()]).flatMap(el => el))
 
-  const [visible, _setVisable] = useState(Array(numOfChildren).fill(0).map(() => false))
+  const [divOpacity, updateOpacity] = useState(0)
+  const setOpacity = (val) => {
+    // ignore when val the same also round to 2dp so set isn't called as much (looks fine still)
+    //  saves all lot as useFrame in animContoller calls this ~60times per s
+    const rounded = Math.round((val + Number.EPSILON) * 100) / 100
+    if (divOpacity !== rounded) {
+      updateOpacity(rounded > 0.85 ? 1 : rounded)
+    }
+  } 
+
+  const [visible, updateVisable] = useState(Array(numOfChildren).fill(false))
   const setVisable = (index) => {
-    _setVisable([...Array(6)].map((val, i) => i === index))
+    // ignore when -1 (all non visable flag) and all alread visable or when index is alread true
+    if ((index === -1 && visible.filter((val) => val).length !== 0) || (index !== -1 && visible[index] === false)) {
+      updateVisable([...Array(numOfChildren)].map((_, i) => i === index))
+    }
   }
 
   const cam = useRef(null)
-  // useHelper(cam, CameraHelper)
 
   return (
     <group>
       <PresentationControls
         snap={{ mass: 4, tension: 1500 }}
       >
-        <SandwichAnimController setVisable={setVisable} cameraRef={cam}>
-          {children.reverse().map((val, index) => {
+        <SandwichAnimController setVisable={setVisable} setOpacity={setOpacity} cameraRef={cam}>
+          {children.current.map((val, index) => {
             if (numOfChildren == 1) {
+              // if you only have 1 child make entire sandwich
               return [
-                items.Bread,
+                items.current.Bread,
                 parts.current[index * 2 + 2],
                 parts.current[index * 2 + 3],
-                <HTMLcomponent parentNode={parentNode} visible={visible[index]}>
+                <HTMLcomponent parentNode={parentNode} divOpacity={divOpacity} visible={visible[index]}>
                   {val}
                 </HTMLcomponent>,
                 parts.current[index * 2],
                 parts.current[index * 2 + 1],
-                items.Bread,
+                items.current.Bread,
               ]
             } else {
+              // if you have more than one, add bread/stuffing for start and end
               return [
-                ...(index === 0 ? [items.Bread, parts.current[index * 2 + 2], parts.current[index * 2 + 3]] : []),
-                <HTMLcomponent parentNode={parentNode} visible={visible[index]}>
+                ...(index === 0 ? [items.current.Bread, parts.current[index * 2 + 2], parts.current[index * 2 + 3]] : []),
+                <HTMLcomponent parentNode={parentNode} divOpacity={divOpacity} visible={visible[index]}>
                   {val}
                 </HTMLcomponent>,
                 parts.current[index * 2],
                 parts.current[index * 2 + 1],
-                ...(index ===  numOfChildren - 1 ? [items.Bread] : []),
+                ...(index ===  numOfChildren - 1 ? [items.current.Bread] : []),
               ]
             }
           }).flatMap((el) => el).map((el, i) => <group receiveShadow castShadow key={i}>{el}</group>)}
