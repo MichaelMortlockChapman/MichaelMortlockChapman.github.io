@@ -56,7 +56,9 @@ export default function ThreeFrontPage () {
     setContactScrollFlag(!contactScrollFlag)
   }
   const [firstProjectScrollFlag, setFirstProjectScrollFlag] = useState(false)
+  const [projectFocus, setProjectFocus] = useState(0)
   const goToFirstProject = () => {
+    setProjectFocus(projectFocus == sandwichParts.length - 2 ? 1 : projectFocus + 1)
     setFirstProjectScrollFlag(!firstProjectScrollFlag)
   }
   const [endScrollFlag, setEndScrollFlag] = useState(false)
@@ -78,7 +80,7 @@ export default function ThreeFrontPage () {
           <Canvas dpr={[1,2]} shadows gl={{antialias: true}} camera={{position: [70,70,70]}}>
             <ScrollControls pages={scrollPagesNum} damping={0.05} maxSpeed={300} style={{ scrollBehavior: 'smooth' }}>
               <ScrollMiddleware segmentNum={sandwichParts.length} pagesNum={scrollPagesNum} goToSegment={0} flag={contactScrollFlag}/>
-              <ScrollMiddleware segmentNum={sandwichParts.length} pagesNum={scrollPagesNum} goToSegment={1} flag={firstProjectScrollFlag}/>
+              <ScrollMiddleware segmentNum={sandwichParts.length} pagesNum={scrollPagesNum} goToSegment={projectFocus} flag={firstProjectScrollFlag}/>
               <ScrollMiddleware segmentNum={sandwichParts.length} pagesNum={scrollPagesNum} goToSegment={sandwichParts.length - 1} flag={endScrollFlag}/>
               <Scroll style={{ width: '100%' }}>
                 <Sandwich>
