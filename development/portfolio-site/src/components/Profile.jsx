@@ -1,7 +1,8 @@
 import { Box, IconButton, Stack, Typography } from '@mui/material'
 import SandwichHTML from './SandwichHTML'
-import { palette } from '../pages/FrontPage'
 import { useMediaQuery } from 'react-responsive'
+import PropTypes from 'prop-types'
+import { palette } from '../pages/Consts'
 
 function ProfilePicItem () {
   const isDesktop = useMediaQuery({ minWidth: 490 })
@@ -38,6 +39,9 @@ function ListView ({ list }) {
       )}
     </div>
   )
+}
+ListView.propTypes = {
+  list: PropTypes.arrayOf(PropTypes.string),
 }
 
 const progLang = ['C', 'C++', 'C#', 'Java', 'JavaScript', 'ReactJS', 'HTML & CSS', 'Python']

@@ -1,9 +1,11 @@
+/* eslint-disable react/no-unknown-property */
 import { Typography } from '@mui/material';
 import { Html, useScroll } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
 import { useEffect, useRef, useState } from 'react'
 import { MathUtils } from 'three';
 import * as THREE from 'three'
+import PropTypes from 'prop-types';
 
 function IntroText() {
   return (
@@ -11,7 +13,7 @@ function IntroText() {
       <div style={{ backgroundColor: 'white', padding: '10px 30px', borderRadius: '50px', marginBottom: '5px' }}>
         <Typography variant='h4' textAlign={'center'}>
           <div>Welcome to</div>
-          <div>Michael Mortlock-Chapman's</div>
+          <div>Michael Mortlock-Chapman&apos;s</div>
           <div>Portfolio Site</div>
         </Typography>
       </div>
@@ -41,7 +43,8 @@ export default function SandwichAnimTest(props) {
   const partsRef = useRef([]);
   const scroll = useScroll();
 
-  const curve = useRef(new THREE.QuadraticBezierCurve3(new THREE.Vector3(0,70,0), new THREE.Vector3(0, (70 + 10 + 40) / 2, (0 + 60 + 40) / 2), new THREE.Vector3(0,10,60)))
+  const statingHeight = (numPages - (Math.floor(numPages / partsGap))) + 30
+  const curve = useRef(new THREE.QuadraticBezierCurve3(new THREE.Vector3(0,offset * statingHeight + 70,0), new THREE.Vector3(0, ((offset * statingHeight + 70) + 10 + 40) / 2, (0 + 60 + 40) / 2), new THREE.Vector3(0,10,60)))
   const point3 = useRef(new THREE.Vector3())
   
   const [introAnimEnd, setIntroAnimEnd] = useState(false)
@@ -53,6 +56,11 @@ export default function SandwichAnimTest(props) {
   }
   const [hideIntroHtml, setHideIntroHtml] = useState(false)
   const introHtmlGroup = useRef(null)
+  useEffect(() => {
+    if (introAnimEnd) {
+      setHideIntroHtml(true)
+    }
+  }, [introAnimEnd])
 
   useEffect(() => {
     props.setVisable(numPages - 1 - page.current)
@@ -109,13 +117,15 @@ export default function SandwichAnimTest(props) {
     // const cameraPosY = top - (offset * (numParts - partIndexClamp)) - animOffset * gap * scrollPos + cameraSinMovement * Math.sin(clock.getElapsedTime())
     const cameraPosY = partsRef.current[partIndexClamp].position.y + cameraSinMovement * Math.sin(clock.getElapsedTime())
     props.cameraRef.current.position.y = cameraPosY
+    props.cameraRef.current.position.x = 0
+    props.cameraRef.current.position.z = 60
+    props.cameraRef.current.rotation.x = 0
 
     // ###########
-    // intro text position & hiding
+    // intro text position
     // ###########
     introHtmlGroup.current.position.x = 0.4 * Math.sin(clock.getElapsedTime() + (Math.PI/32) * props.children.length)
     introHtmlGroup.current.position.y = partsRef.current[numParts - 1].position.y + 1
-    setHideIntroHtml(scroll.offset !== 0)
 
     // ###########
     // intro animation
@@ -128,15 +138,15 @@ export default function SandwichAnimTest(props) {
     if (clock.getElapsedTime() > animationDuration) {
       skipIntroAnim()
       return;
+    } else {
+      curve.current.v2.set(0,cameraPosY,60) // update new end point to current float y of camera
+      const u = Math.pow(Math.min(clock.getElapsedTime() / animationDuration, 1), 4)
+      curve.current.getPointAt(u, point3.current)
+      props.cameraRef.current.position.y = point3.current.y
+      props.cameraRef.current.position.x = point3.current.x
+      props.cameraRef.current.position.z = point3.current.z
+      props.cameraRef.current.rotation.x = MathUtils.lerp(-Math.PI/2, 0, u)
     }
-    curve.current.v2.set(0,cameraPosY,60) // update new end point to current float y of camera
-    const u = Math.pow(Math.min(clock.getElapsedTime() / animationDuration, 1), 4)
-    curve.current.getPointAt(u, point3.current)
-    props.cameraRef.current.position.y = point3.current.y
-    props.cameraRef.current.position.x = point3.current.x
-    props.cameraRef.current.position.z = point3.current.z
-    props.cameraRef.current.rotation.x = MathUtils.lerp(-Math.PI/2, 0, u)
-
   })
   
   return <>
@@ -162,4 +172,10 @@ export default function SandwichAnimTest(props) {
     }
     )}
   </>
+}
+SandwichAnimTest.propTypes = {
+  children: PropTypes.node.isRequired,
+  cameraRef: PropTypes.object.isRequired,
+  setVisable: PropTypes.func.isRequired,
+  setOpacity: PropTypes.func.isRequired,
 }

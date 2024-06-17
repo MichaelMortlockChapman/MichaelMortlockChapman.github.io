@@ -1,7 +1,7 @@
-import { useEffect } from 'react';
 import { useMediaQuery } from 'react-responsive'
+import PropTypes from 'prop-types';
 
-export default function SandwichHTML(props) {
+export default function SandwichHTML({ children }) {
   const isDesktop = useMediaQuery({ minWidth: 490 })
   const isPortrait = useMediaQuery({ orientation: 'portrait' })
   const sizeTable = [
@@ -19,7 +19,10 @@ export default function SandwichHTML(props) {
       width: !isPortrait && isDesktop ? sizeTable[0][1] : isPortrait && isDesktop ? sizeTable[1][1] : sizeTable[2][1], 
       padding: '10px', borderRadius: '40px' 
     }}>
-      {props.children}
+      {children}
     </div>
   )
+}
+SandwichHTML.propTypes = {
+  children: PropTypes.node.isRequired,
 }

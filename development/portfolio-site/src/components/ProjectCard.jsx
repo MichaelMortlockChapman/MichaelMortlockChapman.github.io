@@ -1,6 +1,7 @@
-import { Button, Card, CardActions, CardContent, CardMedia, Typography } from "@mui/material"
+import { Button, CardActions, CardContent, CardMedia, Typography } from "@mui/material"
 import SandwichHTML from "./SandwichHTML"
-import { palette } from "../pages/FrontPage"
+import { palette } from "../pages/Consts"
+import PropTypes from 'prop-types'
 
 export default function ProjectCard (props) {
   const {
@@ -39,11 +40,11 @@ export default function ProjectCard (props) {
     </SandwichHTML>
   )
 }
-// ProjectCard.propTypes = {
-//   onClickView: PropTypes.func,
-//   onClickSource: PropTypes.func,
-//   imageSrc: PropTypes.string.isRequired,
-//   imageStyle: PropTypes.string,
-//   title: PropTypes.string.isRequired,
-//   body: PropTypes.string
-// }
+ProjectCard.propTypes = {
+  onClickView: PropTypes.func,
+  onClickSource: PropTypes.func,
+  imageSrc: PropTypes.string.isRequired,
+  imageStyle: PropTypes.string,
+  title: PropTypes.string.isRequired,
+  body: PropTypes.string
+}

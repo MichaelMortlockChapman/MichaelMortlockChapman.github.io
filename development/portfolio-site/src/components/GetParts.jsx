@@ -1,6 +1,5 @@
+/* eslint-disable react/no-unknown-property */
 import { useGLTF } from '@react-three/drei'
-import React, { useRef } from 'react'
-import { MeshStandardMaterial } from 'three';
 
 const GLTF_ITEMS = {curret : null};
 export default function GetParts () {

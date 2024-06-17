@@ -1,7 +1,9 @@
-import { Html, PerspectiveCamera, PresentationControls, QuadraticBezierLine, useHelper } from '@react-three/drei'
+/* eslint-disable react/no-unknown-property */
+/* eslint-disable react-hooks/rules-of-hooks */
+import { Html, PerspectiveCamera, PresentationControls } from '@react-three/drei'
 import { useThree } from '@react-three/fiber'
-import { useEffect, useRef, useState } from 'react'
-import { CameraHelper } from 'three'
+import { useRef, useState } from 'react'
+import PropTypes from 'prop-types';
 
 import GetParts from '../components/GetParts.jsx'
 import SandwichAnimController from '../components/SandwichAnimController.jsx'
@@ -11,11 +13,11 @@ import SandwichAnimController from '../components/SandwichAnimController.jsx'
 */
 
 /*
-  while transform and occlude="blending" are fun they have poor accessibility, still not the best but better
-  "A caveat of transform mode is that on some devices and browsers, 
-  the rendered html may appear blurry, as discussed in #859. The issue can be 
-  at least mitigated by scaling down the Html parent and scaling up the html children"
-  - from Drei README
+  not using transform here as it has slightly better accessibility, also always faces camera which is important for the info included
+    "A caveat of transform mode is that on some devices and browsers, 
+    the rendered html may appear blurry, as discussed in #859. The issue can be 
+    at least mitigated by scaling down the Html parent and scaling up the html children"
+    - from Drei README
 */
 function HTMLcomponent({ parentNode, visible, divOpacity, children }) {
   return (
@@ -32,8 +34,14 @@ function HTMLcomponent({ parentNode, visible, divOpacity, children }) {
     </group>
   )
 }
+HTMLcomponent.propTypes = {
+  parentNode: PropTypes.object.isRequired,
+  children: PropTypes.node.isRequired,
+  visible: PropTypes.bool.isRequired,
+  divOpacity: PropTypes.number.isRequired,
+}
 
-function Sandwich(props) {
+export default function Sandwich(props) {
   // can't have a sandwich without any items, also logic stuffs up when children zero
   //  kinda already using a hack with getChildren and what happens in the SandwichAnimController map
   if (props.children === undefined) {
@@ -55,7 +63,7 @@ function Sandwich(props) {
   const numOfChildren = children.current.length
   const itemNames = Object.keys(items.current)
   const getRandomPart = () => items.current[itemNames[Math.floor(Math.random() * itemNames.length)]]
-  const parts = useRef(Array(numOfChildren + 1).fill(0).map((el, i) => [getRandomPart(), getRandomPart()]).flatMap(el => el))
+  const parts = useRef(Array(numOfChildren + 1).fill(0).map(() => [getRandomPart(), getRandomPart()]).flatMap(el => el))
 
   const [divOpacity, updateOpacity] = useState(0)
   const setOpacity = (val) => {
@@ -90,7 +98,7 @@ function Sandwich(props) {
                 items.current.Bread,
                 parts.current[index * 2 + 2],
                 parts.current[index * 2 + 3],
-                <HTMLcomponent parentNode={parentNode} divOpacity={divOpacity} visible={visible[index]}>
+                <HTMLcomponent key={index} parentNode={parentNode} divOpacity={divOpacity} visible={visible[index]}>
                   {val}
                 </HTMLcomponent>,
                 parts.current[index * 2],
@@ -101,7 +109,7 @@ function Sandwich(props) {
               // if you have more than one, add bread/stuffing for start and end
               return [
                 ...(index === 0 ? [items.current.Bread, parts.current[index * 2 + 2], parts.current[index * 2 + 3]] : []),
-                <HTMLcomponent parentNode={parentNode} divOpacity={divOpacity} visible={visible[index]}>
+                <HTMLcomponent key={index} parentNode={parentNode} divOpacity={divOpacity} visible={visible[index]}>
                   {val}
                 </HTMLcomponent>,
                 parts.current[index * 2],
@@ -116,5 +124,6 @@ function Sandwich(props) {
     </group>
   )
 }
-
-export default Sandwich;
+Sandwich.propTypes = {
+  children: PropTypes.node.isRequired,
+}
