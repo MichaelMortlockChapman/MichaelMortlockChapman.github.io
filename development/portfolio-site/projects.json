@@ -1,0 +1,72 @@
+[
+  {
+    "title": "More to be added soon!",
+    "body": "",
+    "image": {
+      "imageURL": "https://i.gifer.com/7VVL.gif",
+      "objectFit": "fill"
+    },
+    "view": null,
+    "code": null
+  },
+  {
+    "title": "Snake",
+    "body": "React Snake Game Clone: The classic arcade game with React's state management and responsive design for an engaging user experience",
+    "image": {
+      "imageURL": "snakegame.png",
+      "objectFit": "contain"
+    },
+    "view": {
+      "external": false,
+      "url": "/snake"
+    },
+    "code": {
+      "external": true,
+      "url": "https://github.com/MichaelMortlockChapman/MichaelMortlockChapman.github.io/tree/main/development/ExampleProject"
+    }
+  },
+  {
+    "title": "Agent-Based Model Simulation",
+    "body": "A basic agent-based model simulation project prototype for a one item market. The project contains simulation settings, three different agent types, and simulation data visualisation. ",
+    "image": {
+      "imageURL": "abmsim.png",
+      "objectFit": "contain"
+    },
+    "view": {
+      "external": true,
+      "url": "https://michaelmortlockchapman.github.io/abmsim"
+    },
+    "code": {
+      "external": true,
+      "url": "https://github.com/MichaelMortlockChapman/ABM-SIM"
+    }
+  },
+  {
+    "title": "Helldivers 2 Randomiser",
+    "body": "A Helldivers 2 equipment randomiser with settings for rolls. The application was built with react and mui. The randomiser includes all the stratagems, boosters, weapons, grenades, and armour perks from the game. It includes two settings, simples and complex. The simple setting allows ‘content packages’ to be picked, allowing for quicker setup. While the complex setting grants the choice to toggle all content either on or off. The randomiser also includes ‘randomness logic’ for fine control over the desired outcome.",
+    "image": {
+      "imageURL": "hd2randomiser.png",
+      "objectFit": "contain"
+    },
+    "view": {
+      "external": true,
+      "url": "https://brechidan.github.io/HD2Randomiser/"
+    },
+    "code": {
+      "external": true,
+      "url": "https://github.com/Brechidan/HD2Randomiser"
+    }
+  },
+  {
+    "title": "Simple Online Store",
+    "body": "This project was built to develop and showcase my skills with the Spring framework. The web service created utilises Spring Boot & a PostgreSQL database to comprise the RESTful API backend of a fictional online store. The service provides logic for authentication, authorization, customer details, product information, and ordering.",
+    "image": {
+      "imageURL": "simpleOnlineStore thumbnail.png",
+      "objectFit": "contain"
+    },
+    "code": {
+      "external": true,
+      "url": "https://github.com/MichaelMortlockChapman/SimpleOnlineStore"
+    }
+  }
+]
