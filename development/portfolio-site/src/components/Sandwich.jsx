@@ -71,7 +71,7 @@ export default function Sandwich(props) {
     //  saves all lot as useFrame in animContoller calls this ~60times per s
     const rounded = Math.round((val + Number.EPSILON) * 100) / 100
     if (divOpacity !== rounded) {
-      updateOpacity(rounded > 0.85 ? 1 : rounded)
+      updateOpacity(rounded > 0.8 ? 1 : rounded)
     }
   } 
 

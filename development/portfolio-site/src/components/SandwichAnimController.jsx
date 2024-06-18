@@ -1,30 +1,10 @@
 /* eslint-disable react/no-unknown-property */
-import { Typography } from '@mui/material';
-import { Html, useScroll } from '@react-three/drei'
+import { useScroll } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
 import { useEffect, useRef, useState } from 'react'
 import { MathUtils } from 'three';
 import * as THREE from 'three'
 import PropTypes from 'prop-types';
-
-function IntroText() {
-  return (
-    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', }}>
-      <div style={{ backgroundColor: 'white', padding: '10px 30px', borderRadius: '50px', marginBottom: '5px' }}>
-        <Typography variant='h4' textAlign={'center'}>
-          <div>Welcome to</div>
-          <div>Michael Mortlock-Chapman&apos;s</div>
-          <div>Portfolio Site</div>
-        </Typography>
-      </div>
-      <div style={{ backgroundColor: 'white', width: 'max-content', padding: '10px 30px', borderRadius: '50px' }}>
-        <Typography variant='h5'>SCROLL - Page navigation</Typography>
-        <Typography variant='h5'>CLICK & DRAG (PC Only) - 3D sandwich movement</Typography>
-        <Typography variant='h5'>ESC (PC Only) - Skip intro</Typography>
-      </div>
-    </div>
-  )
-}
 
 //amount of parts/items between each segment
 const partsGap = 3;
@@ -54,13 +34,6 @@ export default function SandwichAnimTest(props) {
     props.cameraRef.current.position.z = 60
     props.cameraRef.current.rotation.x = 0
   }
-  const [hideIntroHtml, setHideIntroHtml] = useState(false)
-  const introHtmlGroup = useRef(null)
-  useEffect(() => {
-    if (introAnimEnd) {
-      setHideIntroHtml(true)
-    }
-  }, [introAnimEnd])
 
   useEffect(() => {
     props.setVisable(numPages - 1 - page.current)
@@ -122,12 +95,6 @@ export default function SandwichAnimTest(props) {
     props.cameraRef.current.rotation.x = 0
 
     // ###########
-    // intro text position
-    // ###########
-    introHtmlGroup.current.position.x = 0.4 * Math.sin(clock.getElapsedTime() + (Math.PI/32) * props.children.length)
-    introHtmlGroup.current.position.y = partsRef.current[numParts - 1].position.y + 1
-
-    // ###########
     // intro animation
     // ###########
     if (introAnimEnd) {
@@ -150,16 +117,6 @@ export default function SandwichAnimTest(props) {
   })
   
   return <>
-    <group ref={introHtmlGroup}>
-      <Html
-        transform 
-        occlude="raycast"
-        style={{ opacity: hideIntroHtml ? 0 : 1 }}
-        rotation={[-Math.PI/2, 0, 0]}
-      >
-        <IntroText/>
-      </Html>
-    </group>
     {props.children.map((child, index) => {
       return <group 
         receiveShadow castShadow

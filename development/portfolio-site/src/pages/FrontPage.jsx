@@ -6,13 +6,14 @@ import Profile from '../components/Profile'
 import ProjectCard from '../components/ProjectCard'
 import projectData from '../../projects.json'
 import Conclusion from '../components/Conclusion'
-import { AppBar, Button, Stack } from '@mui/material'
+import { AppBar, Button, Dialog, DialogActions, DialogContent, DialogTitle, Stack, Typography } from '@mui/material'
 import PropTypes from 'prop-types'
+import zIndex from '@mui/material/styles/zIndex'
 
 function ScrollMiddleware ({goToSegment, segmentNum, pagesNum, flag}) {
   const scroll = useScroll()
   useEffect(() => {
-    scroll.el.scrollTo({ top: ((window.innerHeight * pagesNum) / segmentNum) * (0.5 + goToSegment), left: 0, behavior: 'smooth' })
+    scroll.el.scrollTo({ top: ((document.documentElement.clientHeight * pagesNum) / segmentNum) * (0.5 + goToSegment), left: 0, behavior: 'smooth' })
   }, [flag])
   return (null)
 }
@@ -66,9 +67,25 @@ export default function ThreeFrontPage () {
     setEndScrollFlag(!endScrollFlag)
   }
 
+  const [dialogOpen, setDialogOpen] = useState(true)
+
   return (
     <div style={{ height: '100vh', background: '#2d4967' }}>
-      { sandwichParts &&
+      <Dialog open={dialogOpen}>
+        <DialogTitle sx={{ textAlign: 'center'}}><b>Welcome To My Portfolio Site!</b></DialogTitle>
+        <DialogContent sx={{ paddingBottom: '0' }}>
+          <Typography variant='body1'><b>SCROLL</b> - Page Navigation</Typography>
+          <Typography variant='body1'><b>HOLD CLICK & DRAG*</b> - 3D Movement</Typography>
+          <Typography variant='body1'><b>ESC*</b> - Skip Intro</Typography>
+          <Typography sx={{ fontSize: '0.7rem'}}>*PC Only Currently</Typography>
+          <br/>
+          <Typography variant='body1'>This site works best at default zoom settings (100%). Additionally for site navigation, make sure you&apos;re not scrolling on info elements as they have their own scrollbars!</Typography>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setDialogOpen(false)}>Start</Button>
+        </DialogActions>
+      </Dialog>
+      { !dialogOpen && sandwichParts &&
         <Suspense fallback={null}>
           <AppBar sx={{ backgroundColor: 'transparent', boxShadow: 'none', padding: '5px' }}>
             <Stack sx={{ flexDirection: 'row', justifyContent: 'flex-end', marginRight: '25px' }}>
@@ -78,7 +95,7 @@ export default function ThreeFrontPage () {
             </Stack>
           </AppBar>
           <Canvas dpr={[1,2]} shadows gl={{antialias: true}} camera={{position: [70,70,70]}}>
-            <ScrollControls pages={scrollPagesNum} damping={0.05} maxSpeed={300} style={{ scrollBehavior: 'smooth' }}>
+            <ScrollControls pages={scrollPagesNum} damping={0.05} maxSpeed={300}>
               <ScrollMiddleware segmentNum={sandwichParts.length} pagesNum={scrollPagesNum} goToSegment={0} flag={contactScrollFlag}/>
               <ScrollMiddleware segmentNum={sandwichParts.length} pagesNum={scrollPagesNum} goToSegment={projectFocus} flag={firstProjectScrollFlag}/>
               <ScrollMiddleware segmentNum={sandwichParts.length} pagesNum={scrollPagesNum} goToSegment={sandwichParts.length - 1} flag={endScrollFlag}/>
