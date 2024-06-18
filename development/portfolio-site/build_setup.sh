@@ -1,8 +1,6 @@
 #!/bin/bash
+set -x 
+npm run build 
 
-set -x
-npm run build
-process_id=$!
-wait process_id
-cp -TRv build/ '../../docs'
-set +x
+cp -TRv 'dist/' '../../docs' 
+set +x 
