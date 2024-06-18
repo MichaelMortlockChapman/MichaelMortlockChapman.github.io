@@ -23,7 +23,7 @@ function App() {
         <Snake/>
         <div style={{ display: 'flex', justifyContent: 'center' }}>
           <div>
-            <a href="https://github.com/MichaelMortlockChapman/MichaelMortlockChapman.github.io/tree/main/development/src/ExampleProject" rel="noreferrer" target="_blank">
+            <a href="https://github.com/MichaelMortlockChapman/MichaelMortlockChapman.github.io/tree/main/development/ExampleProject" rel="noreferrer" target="_blank">
               <Typography variant='body1'>Source code</Typography>
             </a>
           </div>
