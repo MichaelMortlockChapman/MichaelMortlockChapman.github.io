@@ -74,12 +74,12 @@ export default function Profile() {
             </Typography>
             <IconButton tabIndex={-1} aria-label='github link button'>
               <a href="https://github.com/MichaelMortlockChapman" rel="noreferrer" target="_blank">
-                <img src="https://github.githubassets.com/assets/GitHub-Mark-ea2971cee799.png" width={'30px'} alt='github icon'/>
+                <img src="/GitHub.png" width={'30px'} alt='github icon'/>
               </a>
             </IconButton>
             <IconButton tabIndex={-1} aria-label='linkedIn link button'>
               <a href="https://www.linkedin.com/in/m-mortlock-chapman/" rel="noreferrer" target="_blank">
-                <img src="https://content.linkedin.com/content/dam/me/business/en-us/amp/brand-site/v2/bg/LI-Bug.svg.original.svg" width={'30px'} alt='linkedIn Icon'/>
+                <img src="/LinkedIn.svg" width={'30px'} alt='linkedIn Icon'/>
               </a>
             </IconButton>
             <IconButton tabIndex={-1} aria-label='email link button'>

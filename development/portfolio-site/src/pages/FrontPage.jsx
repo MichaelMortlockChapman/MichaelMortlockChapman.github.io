@@ -8,12 +8,11 @@ import projectData from '../../projects.json'
 import Conclusion from '../components/Conclusion'
 import { AppBar, Button, Dialog, DialogActions, DialogContent, DialogTitle, Stack, Typography } from '@mui/material'
 import PropTypes from 'prop-types'
-import zIndex from '@mui/material/styles/zIndex'
 
 function ScrollMiddleware ({goToSegment, segmentNum, pagesNum, flag}) {
   const scroll = useScroll()
   useEffect(() => {
-    scroll.el.scrollTo({ top: ((document.documentElement.clientHeight * pagesNum) / segmentNum) * (0.5 + goToSegment), left: 0, behavior: 'smooth' })
+    scroll.el.scrollTo({ top: ((scroll.el.clientHeight * pagesNum) / segmentNum) * (0.5 + goToSegment), left: 0, behavior: 'smooth' })
   }, [flag])
   return (null)
 }

@@ -11,7 +11,7 @@ const partsGap = 3;
 // offset consts
 const offset = 1.04;
 const animOffset = 0.9;
-const gap = 14
+const gap = 16
 // peak of the sin wave
 const cameraSinMovement = 0.5
 
