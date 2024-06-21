@@ -18,6 +18,35 @@ The main idea behind the site was to display my skills and willingness to learn 
 -	<b>[Fixed]</b> On Chrome the address bar causes issues with `innerHeight` so the menu buttons do not scroll to the correct positions.
 -	<b>[Fixed]</b> The LinkedIn SVG does not display correctly on Firefox mobile.
 
+## Project Structure
+```
+/MichaelMortlockChapman.github.io
+|-- /development
+|   |-- /ExampleProject (simple snake example project)
+|   |   `-- ...
+|   `-- /portfolio-site (main dev folder)
+|       |-- public (public assets)
+|       |-- src (scripts)
+|       |   |-- components
+|       |   |-- pages
+|       |   |-- ...
+|       |   `-- main.jsx (js entry)
+|       |-- ...
+|       |-- build_setup.sh
+|       |-- index.html (main entry)
+|       `-- package.json (npm packages)
+|-- /docs (github hosted sites)
+|   |-- /abmsim
+|   |-- /ExampleProject
+|   |-- /assets (main site assets)
+|   |-- ...
+|   |-- snake.html (ExampleProject page)
+|   |-- abmsim.html (abmsim page)
+|   `-- index.html (main page)
+|-- ...
+`-- README.md (you're here)
+```
+
 ## Development Instructions
 ### Setup
 1. Clone the repository
@@ -33,7 +62,7 @@ npm install
 ```
 npm run dev
 ```
-##
+
 ### Build
 Run bash script
 ```
